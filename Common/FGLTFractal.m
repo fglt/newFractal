@@ -186,15 +186,18 @@
 - (void)color:(CGFloat)value bgr:(UInt8 *)bgr
 {
     CGFloat hsv[3] = {0,1,1};
-    //hsv[0] =  value/_times*1.2;
-    hsv[0] = value<=5?  value/_times/1.4 : value/_times/1.4+exp(value-_times)/2;
+    
+    hsv[0] = value/_times*0.7;
+    CGFloat step = exp(value-_times)*2;
+    if(value>_times*0.1)
+        hsv[0]+= step;
+
     hsv[0] = hsv[0]<=1? hsv[0]:0;
     CGFloat bgrf[3] ={0,0,0};
     HSVtoRGB(hsv, bgrf);
     bgr[0] = bgrf[0]*255;
     bgr[1] = bgrf[1]*255;
     bgr[2] = bgrf[2]*255;
-    
 }
 
 - (UInt32)countOfCores
