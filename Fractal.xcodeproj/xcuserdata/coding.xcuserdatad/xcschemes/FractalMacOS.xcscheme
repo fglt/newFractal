@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "171EBBF21E757DEE003099A4"
-               BuildableName = "Fractal.app"
-               BlueprintName = "Fractal"
+               BlueprintIdentifier = "171EBC2C1E757E96003099A4"
+               BuildableName = "FractalMacOS.app"
+               BlueprintName = "FractalMacOS"
                ReferencedContainer = "container:Fractal.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "171EBBF21E757DEE003099A4"
-            BuildableName = "Fractal.app"
-            BlueprintName = "Fractal"
+            BlueprintIdentifier = "171EBC2C1E757E96003099A4"
+            BuildableName = "FractalMacOS.app"
+            BlueprintName = "FractalMacOS"
             ReferencedContainer = "container:Fractal.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,9 +55,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "171EBBF21E757DEE003099A4"
-            BuildableName = "Fractal.app"
-            BlueprintName = "Fractal"
+            BlueprintIdentifier = "171EBC2C1E757E96003099A4"
+            BuildableName = "FractalMacOS.app"
+            BlueprintName = "FractalMacOS"
             ReferencedContainer = "container:Fractal.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -74,9 +74,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "171EBBF21E757DEE003099A4"
-            BuildableName = "Fractal.app"
-            BlueprintName = "Fractal"
+            BlueprintIdentifier = "171EBC2C1E757E96003099A4"
+            BuildableName = "FractalMacOS.app"
+            BlueprintName = "FractalMacOS"
             ReferencedContainer = "container:Fractal.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
