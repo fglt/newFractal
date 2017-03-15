@@ -35,6 +35,14 @@
 		171EBC621E757F3D003099A4 /* FGTHSBSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC4B1E757EBA003099A4 /* FGTHSBSupport.m */; };
 		171EBC631E757F3D003099A4 /* ProgressIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC4D1E757EBA003099A4 /* ProgressIndictor.m */; };
 		171EBC641E757F3D003099A4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC4F1E757EBA003099A4 /* ViewController.m */; };
+		171EBC671E768D44003099A4 /* CubeHelix.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC661E768D44003099A4 /* CubeHelix.m */; };
+		171EBC691E768D44003099A4 /* CubeHelix.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC661E768D44003099A4 /* CubeHelix.m */; };
+		171EBC721E769A33003099A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC711E769A33003099A4 /* AppDelegate.m */; };
+		171EBC751E769A33003099A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC741E769A33003099A4 /* main.m */; };
+		171EBC781E769A33003099A4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC771E769A33003099A4 /* ViewController.m */; };
+		171EBC7A1E769A33003099A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171EBC791E769A33003099A4 /* Assets.xcassets */; };
+		171EBC7D1E769A33003099A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 171EBC7B1E769A33003099A4 /* Main.storyboard */; };
+		171EBC821E76AE0E003099A4 /* CubeHelix.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC661E768D44003099A4 /* CubeHelix.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +73,17 @@
 		171EBC4D1E757EBA003099A4 /* ProgressIndictor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressIndictor.m; sourceTree = "<group>"; };
 		171EBC4E1E757EBA003099A4 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		171EBC4F1E757EBA003099A4 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		171EBC651E768D44003099A4 /* CubeHelix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CubeHelix.h; sourceTree = "<group>"; };
+		171EBC661E768D44003099A4 /* CubeHelix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CubeHelix.m; sourceTree = "<group>"; };
+		171EBC6E1E769A33003099A4 /* CubeHelix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CubeHelix.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		171EBC701E769A33003099A4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		171EBC711E769A33003099A4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		171EBC741E769A33003099A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		171EBC761E769A33003099A4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		171EBC771E769A33003099A4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		171EBC791E769A33003099A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		171EBC7C1E769A33003099A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		171EBC7E1E769A33003099A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +108,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		171EBC6B1E769A33003099A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -98,6 +124,7 @@
 				171EBC0D1E757E39003099A4 /* Common */,
 				171EBC131E757E82003099A4 /* FractalIOS */,
 				171EBC2E1E757E96003099A4 /* FractalMacOS */,
+				171EBC6F1E769A33003099A4 /* CubeHelix */,
 				171EBBF41E757DEE003099A4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,6 +135,7 @@
 				171EBBF31E757DEE003099A4 /* Fractal.app */,
 				171EBC121E757E82003099A4 /* FractalIOS.app */,
 				171EBC2D1E757E96003099A4 /* FractalMacOS.app */,
+				171EBC6E1E769A33003099A4 /* CubeHelix.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -130,6 +158,8 @@
 				171EBC4D1E757EBA003099A4 /* ProgressIndictor.m */,
 				171EBC4E1E757EBA003099A4 /* ViewController.h */,
 				171EBC4F1E757EBA003099A4 /* ViewController.m */,
+				171EBC651E768D44003099A4 /* CubeHelix.h */,
+				171EBC661E768D44003099A4 /* CubeHelix.m */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -169,6 +199,29 @@
 			isa = PBXGroup;
 			children = (
 				171EBC331E757E96003099A4 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		171EBC6F1E769A33003099A4 /* CubeHelix */ = {
+			isa = PBXGroup;
+			children = (
+				171EBC701E769A33003099A4 /* AppDelegate.h */,
+				171EBC711E769A33003099A4 /* AppDelegate.m */,
+				171EBC761E769A33003099A4 /* ViewController.h */,
+				171EBC771E769A33003099A4 /* ViewController.m */,
+				171EBC791E769A33003099A4 /* Assets.xcassets */,
+				171EBC7B1E769A33003099A4 /* Main.storyboard */,
+				171EBC7E1E769A33003099A4 /* Info.plist */,
+				171EBC731E769A33003099A4 /* Supporting Files */,
+			);
+			path = CubeHelix;
+			sourceTree = "<group>";
+		};
+		171EBC731E769A33003099A4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				171EBC741E769A33003099A4 /* main.m */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -227,6 +280,23 @@
 			productReference = 171EBC2D1E757E96003099A4 /* FractalMacOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		171EBC6D1E769A33003099A4 /* CubeHelix */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 171EBC7F1E769A33003099A4 /* Build configuration list for PBXNativeTarget "CubeHelix" */;
+			buildPhases = (
+				171EBC6A1E769A33003099A4 /* Sources */,
+				171EBC6B1E769A33003099A4 /* Frameworks */,
+				171EBC6C1E769A33003099A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CubeHelix;
+			productName = CubeHelix;
+			productReference = 171EBC6E1E769A33003099A4 /* CubeHelix.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -251,6 +321,11 @@
 						DevelopmentTeam = TQWU9HD7N3;
 						ProvisioningStyle = Automatic;
 					};
+					171EBC6D1E769A33003099A4 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = TQWU9HD7N3;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 171EBBEE1E757DEE003099A4 /* Build configuration list for PBXProject "Fractal" */;
@@ -269,6 +344,7 @@
 				171EBBF21E757DEE003099A4 /* Fractal */,
 				171EBC111E757E82003099A4 /* FractalIOS */,
 				171EBC2C1E757E96003099A4 /* FractalMacOS */,
+				171EBC6D1E769A33003099A4 /* CubeHelix */,
 			);
 		};
 /* End PBXProject section */
@@ -300,6 +376,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		171EBC6C1E769A33003099A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				171EBC7A1E769A33003099A4 /* Assets.xcassets in Resources */,
+				171EBC7D1E769A33003099A4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -314,6 +399,7 @@
 				171EBC511E757EBA003099A4 /* Complex.m in Sources */,
 				171EBC551E757EBA003099A4 /* ProgressIndictor.m in Sources */,
 				171EBC501E757EBA003099A4 /* AppDelegate.m in Sources */,
+				171EBC671E768D44003099A4 /* CubeHelix.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,8 +428,20 @@
 				171EBC611E757F3D003099A4 /* FGSwitch.m in Sources */,
 				171EBC621E757F3D003099A4 /* FGTHSBSupport.m in Sources */,
 				171EBC631E757F3D003099A4 /* ProgressIndictor.m in Sources */,
+				171EBC691E768D44003099A4 /* CubeHelix.m in Sources */,
 				171EBC641E757F3D003099A4 /* ViewController.m in Sources */,
 				171EBC341E757E96003099A4 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		171EBC6A1E769A33003099A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				171EBC821E76AE0E003099A4 /* CubeHelix.m in Sources */,
+				171EBC781E769A33003099A4 /* ViewController.m in Sources */,
+				171EBC751E769A33003099A4 /* main.m in Sources */,
+				171EBC721E769A33003099A4 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +468,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				171EBC3B1E757E96003099A4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		171EBC7B1E769A33003099A4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				171EBC7C1E769A33003099A4 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -547,6 +653,38 @@
 			};
 			name = Release;
 		};
+		171EBC801E769A33003099A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = TQWU9HD7N3;
+				INFOPLIST_FILE = CubeHelix/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fglt.CubeHelix;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		171EBC811E769A33003099A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = TQWU9HD7N3;
+				INFOPLIST_FILE = CubeHelix/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fglt.CubeHelix;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -566,6 +704,7 @@
 				171EBC0C1E757DEE003099A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		171EBC261E757E82003099A4 /* Build configuration list for PBXNativeTarget "FractalIOS" */ = {
 			isa = XCConfigurationList;
@@ -574,6 +713,7 @@
 				171EBC281E757E82003099A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		171EBC3E1E757E96003099A4 /* Build configuration list for PBXNativeTarget "FractalMacOS" */ = {
 			isa = XCConfigurationList;
@@ -582,6 +722,16 @@
 				171EBC401E757E96003099A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		171EBC7F1E769A33003099A4 /* Build configuration list for PBXNativeTarget "CubeHelix" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				171EBC801E769A33003099A4 /* Debug */,
+				171EBC811E769A33003099A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
