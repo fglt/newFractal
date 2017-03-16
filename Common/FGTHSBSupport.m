@@ -144,22 +144,23 @@ void cubehelix(CGFloat lamda, CGFloat start, CGFloat rot, CGFloat hue, CGFloat g
     CGFloat red = l + amplitude *(-0.14861*cost + 1.78277*sint);
     CGFloat green = l + amplitude *(-0.29227*cost - 0.90649*sint);
     CGFloat blue = l + amplitude *1.97294*cost;
-    red *= 255;
-    green *= 255;
-    blue *= 255;
+
+    red = 0>=red ? 0: (red>=1? 255 :red*255);
+    green = 0>=green ? 0: (green>=1? 255 :green*255);
+    blue = 0>=blue ? 0: (blue>=1? 255 :blue*255);
     
-    bgr[2] = 0 <=(red<=255 ? red:255) ? red : 0;
-    bgr[1] = 0 <=(green<=255 ? green:255) ? green : 0;
-    bgr[0] = 0 <=(blue<=255 ? blue:255) ? blue : 0;
+    bgr[2] = red;
+    bgr[1] = green;
+    bgr[0] = blue;
 }
 
 void cubehelixF(CGFloat value, UInt8 *bgr)
 {
-    //cubehelix(value, 0, 4, 5, 1, bgr);
-    cubehelix(value, 1, 2, 2, 1, bgr);
+    cubehelix(value, 0, 7, 5, 1, bgr);
+    //cubehelix(value, 1, 2, 2, 1, bgr);
 }
 
-UInt32 countOfCores()
+UInt32 countOfCPUThreads()
 {
     UInt32 ncpu;
     size_t len = sizeof(ncpu);

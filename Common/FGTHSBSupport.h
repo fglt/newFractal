@@ -28,4 +28,4 @@ void RGBToHSV(const CGFloat *bgr, CGFloat *hsv,
 void color(CGFloat value, UInt8 *bgr, int max);
 
 void cubehelixF(CGFloat value, UInt8 *bgr);
-UInt32 countOfCores();
+UInt32 countOfCPUThreads();

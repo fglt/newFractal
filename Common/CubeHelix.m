@@ -32,9 +32,9 @@
     CGFloat red = l + amplitude *(-0.14861*cost + 1.78277*sint);
     CGFloat green = l + amplitude *(-0.29227*cost - 0.90649*sint);
     CGFloat blue = l + amplitude *1.97294*cost;
-    red = 0 <=(red<=1 ? red:1) ? red : 0;
-    green = 0 <=(green<=1 ? green:1) ? green : 0;
-    blue = 0 <=(blue<=1 ? blue:1) ? blue : 0;
+    red = 0 >red ? 0: (red>=1 ? 1:red);
+    green =0 >green ? 0: (green>=1 ? 1:green);
+    blue = 0 >blue ? 0: (blue>=1 ? 1:blue);
     FGColor color = {blue, green, red};
     return color;
 }
@@ -60,7 +60,9 @@
     CGFloat red = l + amplitude *(-0.14861*cost + 1.78277*sint);
     CGFloat green = l + amplitude *(-0.29227*cost - 0.90649*sint);
     CGFloat blue = l + amplitude *1.97294*cost;
-    
+    red = 0 >red ? 0: (red>=1 ? 1:red);
+    green =0 >green ? 0: (green>=1 ? 1:green);
+    blue = 0 >blue ? 0: (blue>=1 ? 1:blue);
     FGColor color = {blue, green, red};
     return color;
 }

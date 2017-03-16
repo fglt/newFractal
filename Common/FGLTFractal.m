@@ -85,7 +85,7 @@
                 int index = j+i*_width;
                 
                 complexArray[index] = [[Complex alloc] initWithReal:(CGFloat)j*3/_width-1.5 image:(CGFloat)i*3/_height-1.5];
-                kdata[index] = 1;
+                kdata[index] = 0;
             }
         }
     }
@@ -118,7 +118,7 @@
 
 - (void)fractalWithHandler:(void (^)(int startY, int endY))handler completion:(void (^)())completion
 {
-    int threadCount =  countOfCores();
+    int threadCount =  countOfCPUThreads();
     int halfHeight = (_height+1)>>1;
     int heightPerThread = halfHeight/threadCount;
     int mod = halfHeight%threadCount;
@@ -195,6 +195,7 @@
     imgData = nil;
     CGContextRelease(context);
     context = nil;
+    
     if(kdata)
     {
         free(kdata);
