@@ -56,14 +56,12 @@
         
         CGFloat lamda = 0;
         for(int i=0; i<500; i++){
-            CGColorRef color = [_helix color:lamda];
-            const CGFloat *components = CGColorGetComponents(color);
-            ptr[0] = components[2]*255;
-            ptr[1] = components[1]*255;
-            ptr[2] = components[0]*255;
+            FGColor color = [_helix colorWithLamda:lamda];
+            ptr[0] = color.blue*255;
+            ptr[1] = color.green*255;
+            ptr[2] = color.red*255;
             ptr+=4;
             lamda +=0.002;
-            CGColorRelease(color);
         }
         
         ptr =_data;

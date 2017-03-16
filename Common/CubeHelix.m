@@ -21,7 +21,7 @@
     return self;
 }
 
-- (CGColorRef) colorWithLamda:(CGFloat)lamda
+- (FGColor) colorWithLamda:(CGFloat)lamda
 {
     CGFloat theta = 2*M_PI*(_startColor/3 + _rotation * lamda);
     CGFloat sint = sin(theta);
@@ -32,13 +32,15 @@
     CGFloat red = l + amplitude *(-0.14861*cost + 1.78277*sint);
     CGFloat green = l + amplitude *(-0.29227*cost - 0.90649*sint);
     CGFloat blue = l + amplitude *1.97294*cost;
-    
-    CGColorRef color = CGColorCreateGenericRGB(red, green, blue, 1);
+    red = 0 <=(red<=1 ? red:1) ? red : 0;
+    green = 0 <=(green<=1 ? green:1) ? green : 0;
+    blue = 0 <=(blue<=1 ? blue:1) ? blue : 0;
+    FGColor color = {blue, green, red};
     return color;
 }
 
 
-- (CGColorRef) colorWithLamdaHSL:(CGFloat)lamda
+- (FGColor) colorWithLamdaHSL:(CGFloat)lamda
 {
     CGFloat radians = M_PI/180;
     CGFloat ah = (276+120)*radians;
@@ -59,19 +61,7 @@
     CGFloat green = l + amplitude *(-0.29227*cost - 0.90649*sint);
     CGFloat blue = l + amplitude *1.97294*cost;
     
-    CGColorRef color = CGColorCreateGenericRGB(red, green, blue, 1);
-    return color;
-}
-
-
-- (CGColorRef) color:(CGFloat)value
-{
-    CGFloat sq = value*value;
-    CGFloat red = 0.8*value +sq*0.2;
-    CGFloat green = 2*value -sq;
-    CGFloat blue = 1.4*value - 0.4*sq;
-    
-    CGColorRef color = CGColorCreateGenericRGB(red, green, blue, 1);
+    FGColor color = {blue, green, red};
     return color;
 }
 

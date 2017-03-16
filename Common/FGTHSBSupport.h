@@ -25,5 +25,7 @@ void HSVtoRGB(const CGFloat*hsv, CGFloat* bgr);
 void RGBToHSV(const CGFloat *bgr, CGFloat *hsv,
               BOOL preserveHS);
 
+void color(CGFloat value, UInt8 *bgr, int max);
 
-
+void cubehelixF(CGFloat value, UInt8 *bgr);
+UInt32 countOfCores();

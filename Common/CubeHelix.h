@@ -14,6 +14,14 @@ typedef NS_ENUM(NSInteger, RotationDirection){
     RotationDirectionNegative
 };
 
+struct FGColor{
+    CGFloat blue;
+    CGFloat green;
+    CGFloat red;
+};
+
+typedef struct FGColor FGColor;
+
 @interface CubeHelix : NSObject
 @property (nonatomic)CGFloat startColor;
 @property (nonatomic)CGFloat rotation;
@@ -22,8 +30,7 @@ typedef NS_ENUM(NSInteger, RotationDirection){
 @property (nonatomic)RotationDirection rotationDirection;
 
 - (instancetype) initWithStartColor:(CGFloat)color rotation:(CGFloat)rotaion hue:(CGFloat)hue gamma:(CGFloat)gamma;
-- (CGColorRef) colorWithLamda:(CGFloat)lamda;
-- (CGColorRef) colorWithLamdaHSL:(CGFloat)lamda;
-- (CGColorRef) color:(CGFloat)value;
+- (FGColor) colorWithLamda:(CGFloat)lamda;
+- (FGColor) colorWithLamdaHSL:(CGFloat)lamda;
 @end
 
