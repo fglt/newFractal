@@ -77,25 +77,18 @@ static float fractal(float2 position, Fractal fra)
     return 1;
 }
 
-static float2 squareComplex(float2 complex)
+static float4 gradient_fractal(float4 info, Fractal fra)
 {
-    float x = complex[0] *complex[0] -complex[1] *complex[1];
-    float y = 2*complex[0]*complex[1];
-    return float2(x, y);
-}
-
-static float4 gradient_fractal(float2 zcomplex, float time, Fractal fra)
-{
-    float x = zcomplex[0];
-    float y = zcomplex[1]*3.0-1.5;
-    float2 com = zcomplex;
-    if((x*x +y*y<=fra.radius*fra.radius)){
-        time+=1.0/fra.maxTime;
-        com = squareComplex(zcomplex);
-        com = float2(com[0]+fra.complex[0],com[1]+fra.complex[1] );
+    float4 out = info;
+    float sx = info[0]*info[0];
+    float sy = info[1]*info[1];
+    if(sy +sy<=fra.radius*fra.radius){
+        out.x=sx-sy+fra.complex[0];
+        out.y=2*info[0]*info[1]+fra.complex[1];
+        out.z = out.z+1.0/fra.maxTime;
     }
 
-    return float4(com, time, 1);
+    return out;
 }
 
 vertex VertexOut vertex_function(device VertexIn *vertices [[buffer(0)]],
@@ -123,7 +116,7 @@ kernel void fractal_color(texture2d<float, access::write> writeTexture [[texture
     ushort width = writeTexture.get_width();
     ushort height = writeTexture.get_height();
     float2 bounds(width, height);
-    float2 position = float2(gridPosition);
+    float2 position = float2(gridPosition)+float2(0.5);
     
     if(gridPosition.x < width && gridPosition.y < height){
         float value= fractal(position/bounds,fra);
@@ -132,24 +125,32 @@ kernel void fractal_color(texture2d<float, access::write> writeTexture [[texture
     }
 }
 
+kernel void init_fractal_time(texture2d<float, access::write> fractalTexture [[texture(0)]],
+                              uint2 gridPosition [[thread_position_in_grid]])
+{
+    ushort width = fractalTexture.get_width();
+    ushort height = fractalTexture.get_height();
+    float2 bounds(width, height);
+    float2 coords = (float2(gridPosition)+float2(0.5))/bounds;
+
+    float4 c = float4(coords[0]*3-1.5, coords[1]*3-1.5,0,1);
+    fractalTexture.write(c, gridPosition);
+}
+
 kernel void gradient_fractal_time(texture2d<float, access::sample> readTexture [[texture(0)]],
                                   texture2d<float, access::write> fractalTexture [[texture(1)]],
                          constant Fractal &fra [[buffer(0)]],
-                         constant CubeHelix &helix [[buffer(1)]],
                          uint2 gridPosition [[thread_position_in_grid]])
 {
     
     ushort width = fractalTexture.get_width();
     ushort height = fractalTexture.get_height();
     float2 bounds(width, height);
-    float2 position = float2(gridPosition);
-    
-    if(gridPosition.x < width && gridPosition.y < height){
-        float2 coords = position/ bounds;
-        float4 c = readTexture.sample(lsampler, coords);
-        c= gradient_fractal(float2(c.x, c.y), c.z, fra);
-        fractalTexture.write(c, gridPosition);
-    }
+    float2 coords = (float2(gridPosition) +float2(0.5))/ bounds;
+   
+    float4 c = readTexture.sample(lsampler, coords);
+    c= gradient_fractal(c, fra);
+    fractalTexture.write(c, gridPosition);
 }
 
 kernel void gradient_fractal_color(texture2d<float, access::sample> fractalTexture [[texture(0)]],
@@ -163,24 +164,12 @@ kernel void gradient_fractal_color(texture2d<float, access::sample> fractalTextu
     float2 bounds(width, height);
     float2 position = float2(gridPosition);
     
-    if(gridPosition.x < width && gridPosition.y < height){
-        float2 coords = position/ bounds;
-        float4 c = fractalTexture.sample(lsampler, coords);
-        float4 color = cubehelixF(1-c[2], helix);
-        colorTexture.write(color, gridPosition);
-    }
+    float2 coords = (position+float2(0.5))/ bounds;
+    float4 c = fractalTexture.sample(lsampler, coords);
+    float4 color = cubehelixF(1-c.z, helix);
+    colorTexture.write(color, gridPosition);
+    
 }
 
-kernel void init_fractal_time(texture2d<float, access::write> fractalTexture [[texture(0)]],
-                                   uint2 gridPosition [[thread_position_in_grid]])
-{
-    ushort width = fractalTexture.get_width();
-    ushort height = fractalTexture.get_height();
-    float2 bounds(width, height);
-    float2 position = float2(gridPosition);
-    
-    float2 coords = position/ bounds;
-    float4 c = float4(coords,0,1);
-    fractalTexture.write(c, gridPosition);
-}
+
 

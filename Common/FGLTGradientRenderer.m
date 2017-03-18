@@ -10,8 +10,7 @@
 @import MetalKit;
 #import "FGLTGradientRenderer.h"
 
-
-@interface FGLTGradientRenderer()<MTKViewDelegate>
+@interface FGLTGradientRenderer()
 @property (nonatomic, weak) MTKView *view;
 @property (nonatomic, weak) id<MTLDevice> device;
 @property (nonatomic, strong) id<MTLCommandQueue> commandQueue;
@@ -35,6 +34,7 @@
 {
     UInt16 _times;
 }
+
 - (instancetype)initWithView:(MTKView *)view
 {
     if (view.device == nil) {
@@ -45,7 +45,6 @@
     if ((self = [super init]))
     {
         _view = view;
-        _view.delegate = self;
         
         _device = _view.device;
         _library = [_device newDefaultLibrary];
@@ -61,8 +60,6 @@
         _colorOptions =  c;
         [self buildRenderResources];
         [self buildRenderPipeline];
-        [self buildInitGradientComputeResources];
-        [self buildGradientComputePipeline];
         [self buildComputeResources];
         [self buildComputePipeline];
         
@@ -149,11 +146,8 @@
     
     _colorTexture = [_device newTextureWithDescriptor:descriptor];
     _colorTexture.label = @"escapeTime State";
-}
-
-- (void)buildInitGradientComputeResources
-{
-    MTLTextureDescriptor *descriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
+    
+    descriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA16Float
                                                                                           width:_gridSize.width
                                                                                          height:_gridSize.height
                                                                                       mipmapped:NO];
@@ -163,16 +157,21 @@
     _currentGradientTexture = [_device newTextureWithDescriptor:descriptor];
     _currentGradientTexture.label = @"gradient state 0";
     
+    descriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA16Float
+                                                                    width:_gridSize.width
+                                                                   height:_gridSize.height
+                                                                mipmapped:NO];
+    descriptor.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
+
     _lastGradientTexture = [_device newTextureWithDescriptor:descriptor];
     _lastGradientTexture.label = @"gradient state 1";
-    
 }
 
-- (void)buildGradientComputePipeline
+- (void)buildComputePipeline
 {
-    NSError *error;
+    NSError *error = nil;
     
-    
+    _commandQueue = [_device newCommandQueue];
     
     MTLComputePipelineDescriptor *descriptor = [MTLComputePipelineDescriptor new];
     descriptor.computeFunction = [_library newFunctionWithName:@"init_fractal_time"];
@@ -188,29 +187,23 @@
     }
     
     descriptor = [MTLComputePipelineDescriptor new];
-    descriptor.computeFunction = [_library newFunctionWithName:@"init_fractal_time"];
-    descriptor.label = @"init fractal time";
+    descriptor.computeFunction = [_library newFunctionWithName:@"gradient_fractal_time"];
+    descriptor.label = @"gradient fractal time";
     _gradientStatePipelineState = [_device newComputePipelineStateWithDescriptor:descriptor
                                                                          options:MTLPipelineOptionNone
                                                                       reflection:nil
                                                                            error:&error];
     
-    if (!_initGradientPipelineState)
+    if (!_gradientStatePipelineState)
     {
         NSLog(@"Error when compiling  pipeline state: %@", error);
     }
-}
 
-- (void)buildComputePipeline
-{
-    NSError *error = nil;
-    
-    _commandQueue = [_device newCommandQueue];
     
     // The main compute pipeline runs the game of life simulation each frame
-    MTLComputePipelineDescriptor *descriptor = [MTLComputePipelineDescriptor new];
-    descriptor.computeFunction = [_library newFunctionWithName:@"fractal_color"];
-    descriptor.label = @"fractal color";
+    descriptor = [MTLComputePipelineDescriptor new];
+    descriptor.computeFunction = [_library newFunctionWithName:@"gradient_fractal_color"];
+    descriptor.label = @"gradient fractal color";
     _fractalPipelineState = [_device newComputePipelineStateWithDescriptor:descriptor
                                                                    options:MTLPipelineOptionNone
                                                                 reflection:nil
@@ -262,7 +255,6 @@
         [commandEncoder setTexture:_currentGradientTexture atIndex:0];
         [commandEncoder setTexture:_lastGradientTexture atIndex:1];
         [commandEncoder setBytes:&_fractalOptions length:sizeof(_fractalOptions) atIndex:0];
-        [commandEncoder setBytes:&_colorOptions length:sizeof(_colorOptions) atIndex:1];
         [commandEncoder dispatchThreadgroups:threadgroupCount threadsPerThreadgroup:threadsPerThreadgroup];
         id<MTLTexture> tt = _lastGradientTexture;
         _lastGradientTexture = _currentGradientTexture;
@@ -274,7 +266,8 @@
     // Configure the compute command encoder and dispatch the actual work
     [commandEncoder setComputePipelineState:self.fractalPipelineState];
     //[commandEncoder setTexture:_currentGradientTexture atIndex:0];
-    [commandEncoder setTexture:_colorTexture atIndex:0];
+    [commandEncoder setTexture:_currentGradientTexture atIndex:0];
+    [commandEncoder setTexture:_colorTexture atIndex:1];
     [commandEncoder setBytes:&_fractalOptions length:sizeof(_fractalOptions) atIndex:0];
     [commandEncoder setBytes:&_colorOptions length:sizeof(_colorOptions) atIndex:1];
     [commandEncoder dispatchThreadgroups:threadgroupCount threadsPerThreadgroup:threadsPerThreadgroup];
@@ -330,14 +323,11 @@
     [commandBuffer commit];
 }
 
-- (void)fractal
+- (BOOL)fractal
 {
+    if(_times == _fractalOptions.maxTime) return false;
     [self draw];
-}
-
-- (void)fractalGradient
-{
-    [self draw];
+    return true;
 }
 
 - (void)setFractalOptions:(FractalOptions) options{
@@ -349,17 +339,6 @@
 - (void)clear
 {
     _times= 0;
-}
-#pragma mark - MTKViewDelegate
-
-- (void)mtkView:(MTKView *)view drawableSizeWillChange:(CGSize)size
-{
-    
-}
-
-- (void)drawInMTKView:(MTKView *)view
-{
-    
 }
 
 @end

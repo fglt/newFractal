@@ -249,9 +249,10 @@
     [commandBuffer commit];
 }
 
-- (void)fractal
+- (BOOL)fractal
 {
     [self draw];
+    return true;
 }
 
 - (void)setFractalOptions:(FractalOptions) options{

@@ -14,8 +14,9 @@
 #import "FGTHSBSupport.h"
 #import "FGSwitch.h"
 #import "ProgressIndictor.h"
-#import "FGLTFractal.h"
+
 #import "FGLTRenderer.h"
+#import "FGLTGradientRenderer.h"
 
 @interface GPUViewController ()
 
@@ -28,8 +29,7 @@
 @property (weak, nonatomic) IBOutlet ProgressIndictor *progressIndicator;
 
 @property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic, strong) FGLTFractal *fractal;
-@property (nonatomic, strong) FGLTRenderer *renderer;
+@property (nonatomic, strong) id<RendererDelegate> renderer;
 @property (nonatomic, strong) MTKView *mtkView;
 @end
 
@@ -37,29 +37,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _fractal = [[FGLTFractal alloc] init];
-    _fractal.radius = 20;
-    _fractal.width = 602;
-    _fractal.height = 602;
     [self setupMetal];
-    _renderer = [[FGLTRenderer alloc] initWithView:_mtkView];
+    _renderer = [[FGLTGradientRenderer alloc] initWithView:_mtkView];
 }
 
 - (IBAction)fractalButtonAction:(id)sender {
     
     [self configFractal];
-    
-    if([_typeSwitch check]){
-         [self configFractal];
-        if(!self.timer){
-            _progressIndicator.doubleValue = 0;
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(fractalGradients) userInfo:nil repeats:YES];
-        }
-
-    }else{
-        [self configFractal];
-        [self.renderer fractal];
+    if(!self.timer){
+        _progressIndicator.doubleValue = 0;
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(render) userInfo:nil repeats:YES];
     }
+//    if([_typeSwitch check]){
+//         [self configFractal];
+//        if(!self.timer){
+//            _progressIndicator.doubleValue = 0;
+//            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(fractalGradients) userInfo:nil repeats:YES];
+//        }
+//
+//    }else{
+//        [self configFractal];
+//        [self.renderer fractal];
+//    }
     
 }
 
@@ -81,14 +80,11 @@
     [_renderer setFractalOptions:fo];
 }
 
-- (void)fractals
+- (void)render
 {
-    [_renderer fractal];
-}
-
-- (void)fractalGradients
-{
-    
+    if( ![self.renderer fractal]){
+        [_timer invalidate];
+    }
 }
 
 - (IMAGE_CLASS *)imageFromCGImageRef:(CGImageRef)image
