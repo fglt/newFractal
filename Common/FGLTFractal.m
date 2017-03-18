@@ -62,6 +62,16 @@
                 if([z modelSquare]>=_radius*_radius) break;
                 z =  [[z square] addWith:_cComplex];
             }
+            
+//            CGFloat a,b;
+//            a=(CGFloat)x*3/_width-1.5;
+//            b=(CGFloat)y*3/_height-1.5;
+////            Complex * z = [[Complex alloc] initWithReal:(CGFloat)x*3/_width-1.5 image:(CGFloat)y*3/_height-1.5];
+//            for(; m <_times; m++){
+//                if(a*a+b*b>=_radius*_radius) break;
+//                a = a*a-b*b+_cComplex.real;
+//                b = 2*a*b+_cComplex.image; //a已经改变了，应使用中间变量 暂时保存a的值；
+//            }
             return 1-(CGFloat)m/_times;
         }];
     } completion:^{
@@ -124,18 +134,31 @@
     int mod = halfHeight%threadCount;
     
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_group_t group = dispatch_group_create();
-    for(int count=0; count<threadCount; count++){
-        dispatch_group_async(group, queue, ^{
-            int startY = heightPerThread*count;
-            int endY = startY + heightPerThread + mod*((count+1)/threadCount);
+//    dispatch_group_t group = dispatch_group_create();
+//    for(int count=0; count<threadCount; count++){
+//        dispatch_group_async(group, queue, ^{
+//            int startY = heightPerThread*count;
+//            int endY = startY + heightPerThread + mod*((count+1)/threadCount);
+//            handler(startY, endY);
+//        });
+//    }
+//    
+//    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+//        if(completion)
+//            completion();
+//    });
+    
+    dispatch_async(queue, ^{
+        dispatch_apply(threadCount, queue, ^(size_t index) {
+            int startY = heightPerThread*(int)index;
+            int endY = startY + heightPerThread + mod*(((int)index+1)/threadCount);
             handler(startY, endY);
         });
-    }
-    
-    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        if(completion)
-            completion();
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(completion)
+                completion();
+        });
     });
 }
 

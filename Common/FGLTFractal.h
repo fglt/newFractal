@@ -22,7 +22,7 @@
 @property (DNonatomic) uint width;
 @property (DNonatomic) uint height;
 
-- (instancetype)initWithComplex:(Complex *)complex radius:(uint)radius times:(uint)times size:(CGSize)size;
+- (instancetype)initWithComplex:(Complex *)com radius:(uint)radius times:(uint)times size:(CGSize)size;
 - (instancetype)initWithComplexR:(CGFloat )r ComplexI:(CGFloat)i radius:(uint)radius times:(uint)times width:(CGFloat)w height:(CGFloat)h;
 
 
