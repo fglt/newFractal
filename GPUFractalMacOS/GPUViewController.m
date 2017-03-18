@@ -39,6 +39,7 @@
     [super viewDidLoad];
     [self setupMetal];
     _renderer = [[FGLTGradientRenderer alloc] initWithView:_mtkView];
+    //_renderer = [[FGLTRenderer alloc] initWithView:_mtkView];
 }
 
 - (IBAction)fractalButtonAction:(id)sender {

@@ -156,12 +156,6 @@
     
     _currentGradientTexture = [_device newTextureWithDescriptor:descriptor];
     _currentGradientTexture.label = @"gradient state 0";
-    
-    descriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA16Float
-                                                                    width:_gridSize.width
-                                                                   height:_gridSize.height
-                                                                mipmapped:NO];
-    descriptor.usage = MTLTextureUsageShaderRead | MTLTextureUsageShaderWrite;
 
     _lastGradientTexture = [_device newTextureWithDescriptor:descriptor];
     _lastGradientTexture.label = @"gradient state 1";

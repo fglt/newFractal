@@ -11,6 +11,7 @@
 
 using namespace metal;
 
+constant float2 PositionFix = float2(0.5);
 typedef struct {
     uint maxTime;
     uint radius;
@@ -82,10 +83,10 @@ static float4 gradient_fractal(float4 info, Fractal fra)
     float4 out = info;
     float sx = info[0]*info[0];
     float sy = info[1]*info[1];
-    if(sy +sy<=fra.radius*fra.radius){
+    if(sy +sy<fra.radius*fra.radius){
         out.x=sx-sy+fra.complex[0];
         out.y=2*info[0]*info[1]+fra.complex[1];
-        out.z = out.z+1.0/fra.maxTime;
+        out.z += 1;
     }
 
     return out;
@@ -116,7 +117,7 @@ kernel void fractal_color(texture2d<float, access::write> writeTexture [[texture
     ushort width = writeTexture.get_width();
     ushort height = writeTexture.get_height();
     float2 bounds(width, height);
-    float2 position = float2(gridPosition)+float2(0.5);
+    float2 position = float2(gridPosition)+PositionFix;
     
     if(gridPosition.x < width && gridPosition.y < height){
         float value= fractal(position/bounds,fra);
@@ -131,7 +132,7 @@ kernel void init_fractal_time(texture2d<float, access::write> fractalTexture [[t
     ushort width = fractalTexture.get_width();
     ushort height = fractalTexture.get_height();
     float2 bounds(width, height);
-    float2 coords = (float2(gridPosition)+float2(0.5))/bounds;
+    float2 coords = (float2(gridPosition)+PositionFix)/bounds;
 
     float4 c = float4(coords[0]*3-1.5, coords[1]*3-1.5,0,1);
     fractalTexture.write(c, gridPosition);
@@ -146,7 +147,7 @@ kernel void gradient_fractal_time(texture2d<float, access::sample> readTexture [
     ushort width = fractalTexture.get_width();
     ushort height = fractalTexture.get_height();
     float2 bounds(width, height);
-    float2 coords = (float2(gridPosition) +float2(0.5))/ bounds;
+    float2 coords = (float2(gridPosition) +PositionFix)/ bounds;
    
     float4 c = readTexture.sample(lsampler, coords);
     c= gradient_fractal(c, fra);
@@ -164,9 +165,9 @@ kernel void gradient_fractal_color(texture2d<float, access::sample> fractalTextu
     float2 bounds(width, height);
     float2 position = float2(gridPosition);
     
-    float2 coords = (position+float2(0.5))/ bounds;
+    float2 coords = (position+PositionFix)/ bounds;
     float4 c = fractalTexture.sample(lsampler, coords);
-    float4 color = cubehelixF(1-c.z, helix);
+    float4 color = cubehelixF(1-c.z/fra.maxTime, helix);
     colorTexture.write(color, gridPosition);
     
 }
