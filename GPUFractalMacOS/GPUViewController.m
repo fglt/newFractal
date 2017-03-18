@@ -50,11 +50,12 @@
     [self configFractal];
     
     if([_typeSwitch check]){
+         [self configFractal];
         if(!self.timer){
             _progressIndicator.doubleValue = 0;
-            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(fractalGradient) userInfo:nil repeats:YES];
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(fractalGradients) userInfo:nil repeats:YES];
         }
-        
+
     }else{
         [self configFractal];
         [self.renderer fractal];
@@ -85,9 +86,9 @@
     [_renderer fractal];
 }
 
-- (void)fractalGradient
+- (void)fractalGradients
 {
-    [_renderer fractalGradient];
+    
 }
 
 - (IMAGE_CLASS *)imageFromCGImageRef:(CGImageRef)image

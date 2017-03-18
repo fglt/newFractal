@@ -46,6 +46,7 @@
 		171EBCB21E7CDE33003099A4 /* FGTHSBSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC4B1E757EBA003099A4 /* FGTHSBSupport.m */; };
 		171EBCB31E7CE10A003099A4 /* FGSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC491E757EBA003099A4 /* FGSwitch.m */; };
 		171EBCB41E7CE572003099A4 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 171EBCAA1E7CDA5D003099A4 /* Shaders.metal */; };
+		171EBCB71E7D3A65003099A4 /* FGLTGradientRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBCB61E7D3A65003099A4 /* FGLTGradientRenderer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +100,9 @@
 		171EBCA81E7CDA5D003099A4 /* FGLTRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FGLTRenderer.h; sourceTree = "<group>"; };
 		171EBCA91E7CDA5D003099A4 /* FGLTRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FGLTRenderer.m; sourceTree = "<group>"; };
 		171EBCAA1E7CDA5D003099A4 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		171EBCB51E7D3A65003099A4 /* FGLTGradientRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FGLTGradientRenderer.h; sourceTree = "<group>"; };
+		171EBCB61E7D3A65003099A4 /* FGLTGradientRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FGLTGradientRenderer.m; sourceTree = "<group>"; };
+		171EBCB81E7D3AA5003099A4 /* GPURender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPURender.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +191,9 @@
 				171EBC4F1E757EBA003099A4 /* ViewController.m */,
 				171EBC651E768D44003099A4 /* CubeHelix.h */,
 				171EBC661E768D44003099A4 /* CubeHelix.m */,
+				171EBCB51E7D3A65003099A4 /* FGLTGradientRenderer.h */,
+				171EBCB61E7D3A65003099A4 /* FGLTGradientRenderer.m */,
+				171EBCB81E7D3AA5003099A4 /* GPURender.h */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -532,6 +539,7 @@
 				171EBCAB1E7CDA5D003099A4 /* FGLTRenderer.m in Sources */,
 				171EBC8E1E7BC17F003099A4 /* main.m in Sources */,
 				171EBC8B1E7BC17F003099A4 /* AppDelegate.m in Sources */,
+				171EBCB71E7D3A65003099A4 /* FGLTGradientRenderer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

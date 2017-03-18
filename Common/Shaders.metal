@@ -84,13 +84,13 @@ static float2 squareComplex(float2 complex)
     return float2(x, y);
 }
 
-static float4 gradient_fractal(float2 zcomplex, uint time, Fractal fra)
+static float4 gradient_fractal(float2 zcomplex, float time, Fractal fra)
 {
-    float x = zcomplex[0]*3.0-1.5;
+    float x = zcomplex[0];
     float y = zcomplex[1]*3.0-1.5;
     float2 com = zcomplex;
-    if((x*x +y*y<=fra.radius*fra.radius) &&time<fra.maxTime){
-        time++;
+    if((x*x +y*y<=fra.radius*fra.radius)){
+        time+=1.0/fra.maxTime;
         com = squareComplex(zcomplex);
         com = float2(com[0]+fra.complex[0],com[1]+fra.complex[1] );
     }
@@ -147,7 +147,7 @@ kernel void gradient_fractal_time(texture2d<float, access::sample> readTexture [
     if(gridPosition.x < width && gridPosition.y < height){
         float2 coords = position/ bounds;
         float4 c = readTexture.sample(lsampler, coords);
-        c= gradient_fractal(float2(c.x, c.y), (uint)c.z, fra);
+        c= gradient_fractal(float2(c.x, c.y), c.z, fra);
         fractalTexture.write(c, gridPosition);
     }
 }
@@ -166,9 +166,21 @@ kernel void gradient_fractal_color(texture2d<float, access::sample> fractalTextu
     if(gridPosition.x < width && gridPosition.y < height){
         float2 coords = position/ bounds;
         float4 c = fractalTexture.sample(lsampler, coords);
-        c= gradient_fractal(float2(c.x, c.y), (uint)c.z, fra);
-        float4 color = cubehelixF(1-c.z/fra.maxTime, helix);
+        float4 color = cubehelixF(1-c[2], helix);
         colorTexture.write(color, gridPosition);
     }
+}
+
+kernel void init_fractal_time(texture2d<float, access::write> fractalTexture [[texture(0)]],
+                                   uint2 gridPosition [[thread_position_in_grid]])
+{
+    ushort width = fractalTexture.get_width();
+    ushort height = fractalTexture.get_height();
+    float2 bounds(width, height);
+    float2 position = float2(gridPosition);
+    
+    float2 coords = position/ bounds;
+    float4 c = float4(coords,0,1);
+    fractalTexture.write(c, gridPosition);
 }
 
