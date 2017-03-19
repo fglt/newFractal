@@ -359,7 +359,7 @@
 
 - (void)draw
 {
-    if(_timer && _times>=_fractalOptions.maxTime){
+    if(_timer && _times>_fractalOptions.maxTime){
         [_timer invalidate];
         _timer = nil;
         _times= 0;
@@ -400,13 +400,13 @@
 
 - (CGFloat)progress
 {
-    return (CGFloat)(_times)/_fractalOptions.maxTime;
+    return (CGFloat)_times/_fractalOptions.maxTime;
 }
 
 #pragma mark -MTKViewDelegate
 - (void)drawInMTKView:(MTKView *)view
 {
-    if(_fractalOptions.maxTime<=0 ||_times>=_fractalOptions.maxTime) return;
+    if(_fractalOptions.maxTime<=0) return;
     
     
     dispatch_semaphore_wait(self.fractalSemaphore, DISPATCH_TIME_FOREVER);
@@ -423,6 +423,7 @@
 
     [self encodeRenderWorkInBuffer:commandBuffer];
     [commandBuffer commit];
+    
     if(_gradient&&_handler)
         _handler();
 }
