@@ -47,6 +47,17 @@
 		171EBCB41E7CE572003099A4 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 171EBCAA1E7CDA5D003099A4 /* Shaders.metal */; };
 		171EBCB71E7D3A65003099A4 /* FGLTGradientRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBCB61E7D3A65003099A4 /* FGLTGradientRenderer.m */; };
 		171EBCB91E7E3D93003099A4 /* ProgressIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC4D1E757EBA003099A4 /* ProgressIndictor.m */; };
+		17672B781E7EA66A007F1771 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 17672B771E7EA66A007F1771 /* main.m */; };
+		17672B7B1E7EA66A007F1771 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 17672B7A1E7EA66A007F1771 /* AppDelegate.m */; };
+		17672B7E1E7EA66A007F1771 /* GPUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 17672B7D1E7EA66A007F1771 /* GPUViewController.m */; };
+		17672B811E7EA66A007F1771 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17672B7F1E7EA66A007F1771 /* Main.storyboard */; };
+		17672B831E7EA66A007F1771 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 17672B821E7EA66A007F1771 /* Assets.xcassets */; };
+		17672B861E7EA66A007F1771 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 17672B841E7EA66A007F1771 /* LaunchScreen.storyboard */; };
+		17672B8B1E7EA999007F1771 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 171EBCAA1E7CDA5D003099A4 /* Shaders.metal */; };
+		17672B8C1E7EA999007F1771 /* FGSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC491E757EBA003099A4 /* FGSwitch.m */; };
+		17672B8D1E7EA999007F1771 /* FGTHSBSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC4B1E757EBA003099A4 /* FGTHSBSupport.m */; };
+		17672B8E1E7EA999007F1771 /* ProgressIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC4D1E757EBA003099A4 /* ProgressIndictor.m */; };
+		17672B8F1E7EA999007F1771 /* FGLTGradientRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBCB61E7D3A65003099A4 /* FGLTGradientRenderer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +112,16 @@
 		171EBCB51E7D3A65003099A4 /* FGLTGradientRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FGLTGradientRenderer.h; sourceTree = "<group>"; };
 		171EBCB61E7D3A65003099A4 /* FGLTGradientRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FGLTGradientRenderer.m; sourceTree = "<group>"; };
 		171EBCB81E7D3AA5003099A4 /* GPURender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPURender.h; sourceTree = "<group>"; };
+		17672B741E7EA66A007F1771 /* GPUFractalIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GPUFractalIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		17672B771E7EA66A007F1771 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		17672B791E7EA66A007F1771 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		17672B7A1E7EA66A007F1771 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		17672B7C1E7EA66A007F1771 /* GPUViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPUViewController.h; sourceTree = "<group>"; };
+		17672B7D1E7EA66A007F1771 /* GPUViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GPUViewController.m; sourceTree = "<group>"; };
+		17672B801E7EA66A007F1771 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		17672B821E7EA66A007F1771 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		17672B851E7EA66A007F1771 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		17672B871E7EA66A007F1771 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +160,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		17672B711E7EA66A007F1771 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -150,6 +178,7 @@
 				171EBC2E1E757E96003099A4 /* FractalMacOS */,
 				171EBC6F1E769A33003099A4 /* CubeHelix */,
 				171EBC881E7BC17F003099A4 /* GPUFractalMacOS */,
+				17672B751E7EA66A007F1771 /* GPUFractalIOS */,
 				171EBBF41E757DEE003099A4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -162,6 +191,7 @@
 				171EBC2D1E757E96003099A4 /* FractalMacOS.app */,
 				171EBC6E1E769A33003099A4 /* CubeHelix.app */,
 				171EBC871E7BC17F003099A4 /* GPUFractalMacOS.app */,
+				17672B741E7EA66A007F1771 /* GPUFractalIOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -279,6 +309,30 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		17672B751E7EA66A007F1771 /* GPUFractalIOS */ = {
+			isa = PBXGroup;
+			children = (
+				17672B791E7EA66A007F1771 /* AppDelegate.h */,
+				17672B7A1E7EA66A007F1771 /* AppDelegate.m */,
+				17672B7C1E7EA66A007F1771 /* GPUViewController.h */,
+				17672B7D1E7EA66A007F1771 /* GPUViewController.m */,
+				17672B7F1E7EA66A007F1771 /* Main.storyboard */,
+				17672B821E7EA66A007F1771 /* Assets.xcassets */,
+				17672B841E7EA66A007F1771 /* LaunchScreen.storyboard */,
+				17672B871E7EA66A007F1771 /* Info.plist */,
+				17672B761E7EA66A007F1771 /* Supporting Files */,
+			);
+			path = GPUFractalIOS;
+			sourceTree = "<group>";
+		};
+		17672B761E7EA66A007F1771 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				17672B771E7EA66A007F1771 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -367,6 +421,23 @@
 			productReference = 171EBC871E7BC17F003099A4 /* GPUFractalMacOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		17672B731E7EA66A007F1771 /* GPUFractalIOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17672B8A1E7EA66A007F1771 /* Build configuration list for PBXNativeTarget "GPUFractalIOS" */;
+			buildPhases = (
+				17672B701E7EA66A007F1771 /* Sources */,
+				17672B711E7EA66A007F1771 /* Frameworks */,
+				17672B721E7EA66A007F1771 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GPUFractalIOS;
+			productName = GPUFractalIOS;
+			productReference = 17672B741E7EA66A007F1771 /* GPUFractalIOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -401,6 +472,11 @@
 						DevelopmentTeam = TQWU9HD7N3;
 						ProvisioningStyle = Automatic;
 					};
+					17672B731E7EA66A007F1771 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = TQWU9HD7N3;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 171EBBEE1E757DEE003099A4 /* Build configuration list for PBXProject "Fractal" */;
@@ -421,6 +497,7 @@
 				171EBC2C1E757E96003099A4 /* FractalMacOS */,
 				171EBC6D1E769A33003099A4 /* CubeHelix */,
 				171EBC861E7BC17F003099A4 /* GPUFractalMacOS */,
+				17672B731E7EA66A007F1771 /* GPUFractalIOS */,
 			);
 		};
 /* End PBXProject section */
@@ -467,6 +544,16 @@
 			files = (
 				171EBC931E7BC17F003099A4 /* Assets.xcassets in Resources */,
 				171EBC961E7BC17F003099A4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17672B721E7EA66A007F1771 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17672B861E7EA66A007F1771 /* LaunchScreen.storyboard in Resources */,
+				17672B831E7EA66A007F1771 /* Assets.xcassets in Resources */,
+				17672B811E7EA66A007F1771 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,6 +626,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		17672B701E7EA66A007F1771 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17672B8B1E7EA999007F1771 /* Shaders.metal in Sources */,
+				17672B8C1E7EA999007F1771 /* FGSwitch.m in Sources */,
+				17672B8D1E7EA999007F1771 /* FGTHSBSupport.m in Sources */,
+				17672B8E1E7EA999007F1771 /* ProgressIndictor.m in Sources */,
+				17672B8F1E7EA999007F1771 /* FGLTGradientRenderer.m in Sources */,
+				17672B7E1E7EA66A007F1771 /* GPUViewController.m in Sources */,
+				17672B7B1E7EA66A007F1771 /* AppDelegate.m in Sources */,
+				17672B781E7EA66A007F1771 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -580,6 +682,22 @@
 				171EBC951E7BC17F003099A4 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		17672B7F1E7EA66A007F1771 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17672B801E7EA66A007F1771 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		17672B841E7EA66A007F1771 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				17672B851E7EA66A007F1771 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -819,6 +937,30 @@
 			};
 			name = Release;
 		};
+		17672B881E7EA66A007F1771 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = TQWU9HD7N3;
+				INFOPLIST_FILE = GPUFractalIOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fglt.GPUFractalIOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		17672B891E7EA66A007F1771 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = TQWU9HD7N3;
+				INFOPLIST_FILE = GPUFractalIOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.fglt.GPUFractalIOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -872,6 +1014,15 @@
 			buildConfigurations = (
 				171EBC991E7BC17F003099A4 /* Debug */,
 				171EBC9A1E7BC17F003099A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17672B8A1E7EA66A007F1771 /* Build configuration list for PBXNativeTarget "GPUFractalIOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17672B881E7EA66A007F1771 /* Debug */,
+				17672B891E7EA66A007F1771 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 		};

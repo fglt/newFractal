@@ -366,7 +366,11 @@
         [self clearTexture];
         return;
     }
+#if TARGET_OS_IPHONE
+    [_view setNeedsDisplay];
+#else
     [_view setNeedsDisplay:YES];
+#endif
 }
 
 - (void)setFractalOptions:(FractalOptions) options{

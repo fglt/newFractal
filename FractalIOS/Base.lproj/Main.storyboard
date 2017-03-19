@@ -133,15 +133,15 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="dPD-CV-7aC" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="0Je-4x-RLm"/>
                             <constraint firstItem="dPD-CV-7aC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4TA-Fq-WRw"/>
                             <constraint firstItem="dPD-CV-7aC" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Bbf-wu-T5q"/>
                             <constraint firstItem="TKQ-Ct-0Kf" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="LFO-rl-RPl"/>
                             <constraint firstItem="TKQ-Ct-0Kf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Mei-qp-dwR"/>
                             <constraint firstItem="TKQ-Ct-0Kf" firstAttribute="top" secondItem="dPD-CV-7aC" secondAttribute="bottom" constant="20" id="NwO-Vf-fTx"/>
-                            <constraint firstItem="dPD-CV-7aC" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="OER-OX-y3J"/>
-                            <constraint firstItem="dPD-CV-7aC" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="Owu-6i-Q5n"/>
                             <constraint firstItem="dPD-CV-7aC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Y5b-7b-pX1"/>
                             <constraint firstItem="dPD-CV-7aC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="efG-Ev-sHG"/>
+                            <constraint firstItem="dPD-CV-7aC" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="gUy-Vy-LHC"/>
                             <constraint firstItem="TKQ-Ct-0Kf" firstAttribute="top" secondItem="dPD-CV-7aC" secondAttribute="bottom" constant="20" id="jTq-8w-j1A"/>
                             <constraint firstItem="TKQ-Ct-0Kf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mVx-Fh-7j2"/>
                             <constraint firstItem="TKQ-Ct-0Kf" firstAttribute="leading" secondItem="dPD-CV-7aC" secondAttribute="trailing" constant="10" id="ynk-Jl-XTA"/>
@@ -150,8 +150,6 @@
                             <mask key="constraints">
                                 <exclude reference="4TA-Fq-WRw"/>
                                 <exclude reference="Bbf-wu-T5q"/>
-                                <exclude reference="OER-OX-y3J"/>
-                                <exclude reference="Owu-6i-Q5n"/>
                                 <exclude reference="Y5b-7b-pX1"/>
                                 <exclude reference="efG-Ev-sHG"/>
                                 <exclude reference="LFO-rl-RPl"/>
@@ -173,14 +171,12 @@
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
                                 <include reference="4TA-Fq-WRw"/>
-                                <include reference="OER-OX-y3J"/>
                                 <include reference="Mei-qp-dwR"/>
                                 <include reference="jTq-8w-j1A"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
                             <mask key="constraints">
-                                <include reference="Owu-6i-Q5n"/>
                                 <include reference="Y5b-7b-pX1"/>
                                 <include reference="NwO-Vf-fTx"/>
                                 <include reference="mVx-Fh-7j2"/>

@@ -1,8 +1,8 @@
 //
 //  ViewController.m
-//  GPUFractalMacOS
+//  GPUFractalIOS
 //
-//  Created by Coding on 17/03/2017.
+//  Created by Coding on 19/03/2017.
 //  Copyright © 2017 Coding. All rights reserved.
 //
 
@@ -18,14 +18,14 @@
 
 @interface GPUViewController ()
 
-@property (weak) IBOutlet NSView *mtkBoardView;
-@property (weak) IBOutlet NSTextField *crText;
-@property (weak) IBOutlet NSTextField *ciText;
-@property (weak) IBOutlet NSTextField *timesText;
+@property (weak) IBOutlet UIView *mtkBoardView;
+@property (weak) IBOutlet UITextField *crText;
+@property (weak) IBOutlet UITextField *ciText;
+@property (weak) IBOutlet UITextField *timesText;
 @property (weak) IBOutlet FGSwitch *typeSwitch;
 @property (weak) IBOutlet FGSwitch *realTime;
-@property (weak) IBOutlet NSSlider *complexRSlider;
-@property (weak) IBOutlet NSSlider *complexISlider;
+@property (weak) IBOutlet UISlider *complexRSlider;
+@property (weak) IBOutlet UISlider *complexISlider;
 
 @property (weak, nonatomic) IBOutlet ProgressIndictor *progressIndicator;
 
@@ -48,21 +48,20 @@
         
     };
     [_renderer setHandler:handler];
-
+    
     //_renderer = [[FGLTRenderer alloc] initWithView:_mtkView];
 }
 
 - (IBAction)fractalButtonAction:(id)sender {
-     
+    
     [self configFractal];
     self.renderer.gradient = _typeSwitch.check;
     [self.renderer fractal];
 }
 
-- (IBAction)sliderChanged:(NSSlider *)sender {
-    _crText.stringValue =  [NSString stringWithFormat:@"%.3f",_complexRSlider.floatValue];
-    _ciText.floatValue = [NSString stringWithFormat:@"%.3f",_complexISlider.floatValue];
-
+- (IBAction)sliderChanged:(UISlider *)sender {
+    _crText.text = [NSString stringWithFormat:@"%.3f",_complexRSlider.value];
+    _ciText.text = [NSString stringWithFormat:@"%.3f",_complexISlider.value];
     if(_realTime.check && !_typeSwitch.check){
         _renderer.gradient = false;
         [self configFractal];
@@ -73,59 +72,22 @@
 - (void)configFractal
 {
     NSString *crs,*cis, *timestring;
-    
-#if TARGET_OS_IPHONE
+
     crs = _crText.text;
     cis = _ciText.text;
     timestring = _timesText.text;
-#else
-    crs = [_crText.stringValue isEqual:@""] ? _crText.placeholderString:_crText.stringValue;
-    cis = [_ciText.stringValue isEqual:@""] ? _ciText.placeholderString:_ciText.stringValue;
-    timestring = [_timesText.stringValue isEqual:@""] ? _timesText.placeholderString:_timesText.stringValue;
-    
-#endif
+
     FractalOptions fo = {[timestring intValue], 16, [crs floatValue], [cis floatValue]};
     [_renderer setFractalOptions:fo];
 }
 
-- (IMAGE_CLASS *)imageFromCGImageRef:(CGImageRef)image
+- (UIImage *)imageFromCGImageRef:(CGImageRef)image
 
 {
-    IMAGE_CLASS *newImage;
-#if TARGET_OS_IPHONE
+    UIImage *newImage;
+
     newImage = [UIImage imageWithCGImage:image scale:[UIScreen mainScreen].scale orientation:UIImageOrientationUp];
-#else
     
-    NSRect imageRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
-    
-    CGContextRef imageContext = nil;
-    
-    
-    // Get the image dimensions.
-    
-    imageRect.size.height = CGImageGetHeight(image);
-    
-    imageRect.size.width = CGImageGetWidth(image);
-    
-    
-    
-    // Create a new image to receive the Quartz image data.
-    
-    newImage = [[NSImage alloc] initWithSize:imageRect.size];
-    
-    [newImage lockFocus];
-    
-    
-    // Get the Quartz context and draw.
-    
-    imageContext = (CGContextRef)[[NSGraphicsContext currentContext]
-                                  
-                                  graphicsPort];
-    
-    CGContextDrawImage(imageContext, *(CGRect*)&imageRect, image);
-    
-    [newImage unlockFocus];
-#endif
     return newImage;
 }
 
