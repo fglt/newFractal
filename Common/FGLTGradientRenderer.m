@@ -114,6 +114,7 @@
     _vertexBuffer.label = @"Fullscreen Quad Vertices";
 }
 
+
 - (void)buildRenderPipeline {
     
     // Fetch the vertex and fragment functions from the library
@@ -264,12 +265,6 @@
 
 - (void)encodeComputeWorkInBuffer:(id<MTLCommandBuffer>)commandBuffer
 {
-    // The grid we read from to update the simulation is the one that was last displayed on the screen
-    //id<MTLTexture> readTexture = [self.textureQueue lastObject];
-    // The grid we write the new game state to is the one at the head of the queue
-    //id<MTLTexture> writeTexture = [self.textureQueue firstObject];
-    
-    // Create a compute command encoder with which we can ask the GPU to do compute work
     id<MTLComputeCommandEncoder> commandEncoder = [commandBuffer computeCommandEncoder];
     
     // For updating the game state, we divide our grid up into square threadgroups and
@@ -309,7 +304,7 @@
     
     [commandEncoder endEncoding];
     
-    _times++;
+    if(_timer)_times++;
 }
 
 - (void)encodeRenderWorkInBuffer:(id<MTLCommandBuffer>)commandBuffer
@@ -346,12 +341,14 @@
 }
 #endif
 
-- (void)fractal
+- (void)startFractal:(BOOL)gradient
 {
+    if(_timer) return;
+    _gradient = gradient;
     if(_gradient){
-        if(!_timer){
-         _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(draw) userInfo:nil repeats:YES];
-        }
+        
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(draw) userInfo:nil repeats:YES];
+        
     }else{
         [self draw];
     }
@@ -359,7 +356,7 @@
 
 - (void)draw
 {
-    if(_timer && _times>_fractalOptions.maxTime){
+    if(_times>_fractalOptions.maxTime){
         [_timer invalidate];
         _timer = nil;
         _times= 0;

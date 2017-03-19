@@ -29,7 +29,7 @@ typedef void (^FractalHandler)() ;
 @protocol RendererDelegate <NSObject>
 
 @property (weak) FractalHandler handler;
-- (void)fractal;
+- (void)startFractal:(BOOL)gradient;
 
 - (void)setFractalOptions:(FractalOptions) options;
 - (void)setColorOptions:(ColorOptions) options;

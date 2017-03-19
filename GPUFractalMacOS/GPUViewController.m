@@ -56,7 +56,7 @@
      
     [self configFractal];
     self.renderer.gradient = _typeSwitch.check;
-    [self.renderer fractal];
+    [self.renderer fractal:YES];
 }
 
 - (IBAction)sliderChanged:(NSSlider *)sender {
@@ -64,9 +64,8 @@
     _ciText.floatValue = [NSString stringWithFormat:@"%.3f",_complexISlider.floatValue];
 
     if(_realTime.check && !_typeSwitch.check){
-        _renderer.gradient = false;
         [self configFractal];
-        [self.renderer fractal];
+        [self.renderer fractal:NO];
     }
 }
 

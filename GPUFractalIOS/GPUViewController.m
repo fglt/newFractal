@@ -22,8 +22,6 @@
 @property (weak) IBOutlet UITextField *crText;
 @property (weak) IBOutlet UITextField *ciText;
 @property (weak) IBOutlet UITextField *timesText;
-@property (weak) IBOutlet FGSwitch *typeSwitch;
-@property (weak) IBOutlet FGSwitch *realTime;
 @property (weak) IBOutlet UISlider *complexRSlider;
 @property (weak) IBOutlet UISlider *complexISlider;
 
@@ -55,18 +53,16 @@
 - (IBAction)fractalButtonAction:(id)sender {
     
     [self configFractal];
-    self.renderer.gradient = _typeSwitch.check;
-    [self.renderer fractal];
+    [self.renderer startFractal:YES];
 }
 
 - (IBAction)sliderChanged:(UISlider *)sender {
     _crText.text = [NSString stringWithFormat:@"%.3f",_complexRSlider.value];
     _ciText.text = [NSString stringWithFormat:@"%.3f",_complexISlider.value];
-    if(_realTime.check && !_typeSwitch.check){
-        _renderer.gradient = false;
-        [self configFractal];
-        [self.renderer fractal];
-    }
+
+    [self configFractal];
+    [self.renderer startFractal:NO];
+    
 }
 
 - (void)configFractal
