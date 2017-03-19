@@ -10,7 +10,7 @@
 @import MetalKit;
 #import "FGLTGradientRenderer.h"
 
-@interface FGLTGradientRenderer()
+@interface FGLTGradientRenderer()<MTKViewDelegate>
 @property (nonatomic, weak) MTKView *view;
 @property (nonatomic, weak) id<MTLDevice> device;
 @property (nonatomic, strong) id<MTLCommandQueue> commandQueue;
@@ -23,16 +23,16 @@
 @property (nonatomic, strong) id<MTLTexture> currentGradientTexture;
 @property (nonatomic, strong) id<MTLTexture> lastGradientTexture;
 
-@property (nonatomic, strong) id<MTLComputePipelineState> initGradientPipelineState;
 @property (nonatomic, strong) id<MTLComputePipelineState> gradientStatePipelineState;
 
 @property (nonatomic, readonly) MTLSize gridSize;
-
+@property (nonatomic, strong) dispatch_semaphore_t fractalSemaphore;
 @end
 
 @implementation FGLTGradientRenderer
 {
     UInt16 _times;
+    NSDate *_nextTimestamp;;
 }
 
 - (instancetype)initWithView:(MTKView *)view
@@ -45,7 +45,7 @@
     if ((self = [super init]))
     {
         _view = view;
-        
+        _view.delegate = self;
         _device = _view.device;
         _library = [_device newDefaultLibrary];
         _commandQueue = [_device newCommandQueue];
@@ -62,7 +62,7 @@
         [self buildRenderPipeline];
         [self buildComputeResources];
         [self buildComputePipeline];
-        
+        self.fractalSemaphore = dispatch_semaphore_create(1);
     }
     
     return self;
@@ -168,19 +168,6 @@
     _commandQueue = [_device newCommandQueue];
     
     MTLComputePipelineDescriptor *descriptor = [MTLComputePipelineDescriptor new];
-    descriptor.computeFunction = [_library newFunctionWithName:@"init_fractal_time"];
-    descriptor.label = @"init fractal time";
-    _initGradientPipelineState = [_device newComputePipelineStateWithDescriptor:descriptor
-                                                                        options:MTLPipelineOptionNone
-                                                                     reflection:nil
-                                                                          error:&error];
-    
-    if (!_initGradientPipelineState)
-    {
-        NSLog(@"Error when compiling  pipeline state: %@", error);
-    }
-    
-    descriptor = [MTLComputePipelineDescriptor new];
     descriptor.computeFunction = [_library newFunctionWithName:@"gradient_fractal_time"];
     descriptor.label = @"gradient fractal time";
     _gradientStatePipelineState = [_device newComputePipelineStateWithDescriptor:descriptor
@@ -239,12 +226,7 @@
     MTLSize threadgroupCount = MTLSizeMake(ceil((float)self.gridSize.width / threadsPerThreadgroup.width),
                                            ceil((float)self.gridSize.height / threadsPerThreadgroup.height),
                                            1);
-
-    if(_times==0){
-        [commandEncoder setComputePipelineState:_initGradientPipelineState];
-        [commandEncoder setTexture:_currentGradientTexture atIndex:0];
-        [commandEncoder dispatchThreadgroups:threadgroupCount threadsPerThreadgroup:threadsPerThreadgroup];
-    }else{
+    
         [commandEncoder setComputePipelineState:_gradientStatePipelineState];
         [commandEncoder setTexture:_currentGradientTexture atIndex:0];
         [commandEncoder setTexture:_lastGradientTexture atIndex:1];
@@ -254,12 +236,9 @@
         _lastGradientTexture = _currentGradientTexture;
         _currentGradientTexture = tt;
         
-    }
-
-    
+    //}
     // Configure the compute command encoder and dispatch the actual work
     [commandEncoder setComputePipelineState:self.fractalPipelineState];
-    //[commandEncoder setTexture:_currentGradientTexture atIndex:0];
     [commandEncoder setTexture:_currentGradientTexture atIndex:0];
     [commandEncoder setTexture:_colorTexture atIndex:1];
     [commandEncoder setBytes:&_fractalOptions length:sizeof(_fractalOptions) atIndex:0];
@@ -320,7 +299,7 @@
 - (BOOL)fractal
 {
     if(_times == _fractalOptions.maxTime) return false;
-    [self draw];
+    //dispatch_semaphore_signal(self.fractalSemaphore);
     return true;
 }
 
@@ -335,4 +314,32 @@
     _times= 0;
 }
 
+- (void)drawInMTKView:(MTKView *)view
+{
+    dispatch_semaphore_wait(self.fractalSemaphore, DISPATCH_TIME_FOREVER);
+    
+    if(_nextTimestamp && [_nextTimestamp timeIntervalSinceNow]>0) {
+        dispatch_semaphore_signal(_fractalSemaphore);
+        return;
+    }
+    id<MTLCommandBuffer> commandBuffer = [self.commandQueue commandBuffer];
+    
+    __block dispatch_semaphore_t blockSemaphore = self.fractalSemaphore;
+
+    [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer) {
+        dispatch_semaphore_signal(blockSemaphore);
+        _nextTimestamp = [NSDate dateWithTimeIntervalSinceNow:0.2];
+    }];
+    
+    [self encodeComputeWorkInBuffer:commandBuffer];
+    
+    [self encodeRenderWorkInBuffer:commandBuffer];
+    
+    [commandBuffer commit];
+}
+
+- (void)mtkView:(MTKView *)view drawableSizeWillChange:(CGSize)size
+{
+    
+}
 @end

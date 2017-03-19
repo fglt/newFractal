@@ -138,6 +138,7 @@
     _mtkView = [[MTKView alloc] initWithFrame:CGRectMake((parentSize.width-minSize)/2, (parentSize.height-minSize)/2, minSize, minSize) device:MTLCreateSystemDefaultDevice()];
     
     _mtkView.colorPixelFormat = MTLPixelFormatBGRA8Unorm;
+    _mtkView.drawableSize = _mtkView.bounds.size;
     _renderer = [[FGLTRenderer alloc] initWithView:_mtkView];
     [_mtkBoardView addSubview:_mtkView];
     

@@ -80,16 +80,31 @@ static float fractal(float2 position, Fractal fra)
 
 static float4 gradient_fractal(float4 info, Fractal fra)
 {
-    float4 out = info;
-    float sx = info[0]*info[0];
-    float sy = info[1]*info[1];
-    if(sy +sy<fra.radius*fra.radius){
-        out.x=sx-sy+fra.complex[0];
-        out.y=2*info[0]*info[1]+fra.complex[1];
-        out.z += 1;
-    }
+//    float4 out = float4(info);
+//    float sx = info[0]*info[0];
+//    float sy = info[1]*info[1];
+//    if(sy +sy<=fra.radius*fra.radius){
+//        float tmp = sx-sy+fra.complex[0];
+//        out.y=2*out[0]*out[1]+fra.complex[1];
+//        out.x = tmp;
+//        out.z ++;
+//    }
+//
+//    return out;
+    float x = info[0];
+    float y = info[1];
+    uint m = info[2];
 
-    return out;
+    float sx = x*x;
+    float sy = y*y;
+    if(sx + sy<fra.radius *fra.radius){
+        float tmpx = sx-sy+fra.complex[0];
+         y = x*y*2+fra.complex[1];
+         x = tmpx;
+            m++;
+    }
+    
+    return float4(x, y, m, info.w);
 }
 
 vertex VertexOut vertex_function(device VertexIn *vertices [[buffer(0)]],
@@ -100,7 +115,7 @@ vertex VertexOut vertex_function(device VertexIn *vertices [[buffer(0)]],
     out.texCoords = vertices[vid].texCoords;;
     return out;
 }
-constexpr sampler lsampler(coord::normalized, filter::linear);
+constexpr sampler lsampler(coord::normalized, filter::nearest);
 
 fragment float4 fragment_function(VertexOut in [[stage_in]],
                                  texture2d<float, access::sample> escapeTime [[texture(0)]])
@@ -126,30 +141,20 @@ kernel void fractal_color(texture2d<float, access::write> writeTexture [[texture
     }
 }
 
-kernel void init_fractal_time(texture2d<float, access::write> fractalTexture [[texture(0)]],
-                              uint2 gridPosition [[thread_position_in_grid]])
-{
-    ushort width = fractalTexture.get_width();
-    ushort height = fractalTexture.get_height();
-    float2 bounds(width, height);
-    float2 coords = (float2(gridPosition)+PositionFix)/bounds;
-
-    float4 c = float4(coords[0]*3-1.5, coords[1]*3-1.5,0,1);
-    fractalTexture.write(c, gridPosition);
-}
-
 kernel void gradient_fractal_time(texture2d<float, access::sample> readTexture [[texture(0)]],
                                   texture2d<float, access::write> fractalTexture [[texture(1)]],
                          constant Fractal &fra [[buffer(0)]],
                          uint2 gridPosition [[thread_position_in_grid]])
 {
     
-    ushort width = fractalTexture.get_width();
-    ushort height = fractalTexture.get_height();
+    ushort width = readTexture.get_width();
+    ushort height = readTexture.get_height();
     float2 bounds(width, height);
     float2 coords = (float2(gridPosition) +PositionFix)/ bounds;
    
     float4 c = readTexture.sample(lsampler, coords);
+    if(c.w == 0)
+        c = float4(coords[0]*3-1.5,coords[1]*3-1.5,0,1);
     c= gradient_fractal(c, fra);
     fractalTexture.write(c, gridPosition);
 }
@@ -160,12 +165,12 @@ kernel void gradient_fractal_color(texture2d<float, access::sample> fractalTextu
                                   constant CubeHelix &helix [[buffer(1)]],
                                   uint2 gridPosition [[thread_position_in_grid]])
 {
-    ushort width = fractalTexture.get_width();
-    ushort height = fractalTexture.get_height();
+    ushort width = colorTexture.get_width();
+    ushort height = colorTexture.get_height();
     float2 bounds(width, height);
-    float2 position = float2(gridPosition);
+    float2 position = float2(gridPosition)+PositionFix;
     
-    float2 coords = (position+PositionFix)/ bounds;
+    float2 coords = position/ bounds;
     float4 c = fractalTexture.sample(lsampler, coords);
     float4 color = cubehelixF(1-c.z/fra.maxTime, helix);
     colorTexture.write(color, gridPosition);
