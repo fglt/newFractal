@@ -18,6 +18,8 @@
     FractalOptions _fractalOptions;
     ColorOptions _colorOptions;
 }
+@property (nonatomic) FractalOptions fractalOptions;
+@property (nonatomic) ColorOptions colorOptions;
 @property (weak) FractalHandler handler;
 @property BOOL gradient;
 - (instancetype)initWithView:(MTKView *)view;

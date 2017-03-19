@@ -23,6 +23,9 @@
 @property (weak) IBOutlet NSTextField *ciText;
 @property (weak) IBOutlet NSTextField *timesText;
 @property (weak) IBOutlet FGSwitch *typeSwitch;
+@property (weak) IBOutlet FGSwitch *realTime;
+@property (weak) IBOutlet NSSlider *complexRSlider;
+@property (weak) IBOutlet NSSlider *complexISlider;
 
 @property (weak, nonatomic) IBOutlet ProgressIndictor *progressIndicator;
 
@@ -54,24 +57,17 @@
     [self configFractal];
     self.renderer.gradient = _typeSwitch.check;
     [self.renderer fractal];
-//    __weak typeof(self) weakSelf = self;
-//    
-//    [self.renderer setHandler:^(){
-//        weakSelf.progressIndicator.doubleValue = [(FGLTGradientRenderer *)weakSelf.renderer progress];
-//    
-//    }];
-//    if([_typeSwitch check]){
-//         [self configFractal];
-//        if(!self.timer){
-//            _progressIndicator.doubleValue = 0;
-//            self.timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(fractalGradients) userInfo:nil repeats:YES];
-//        }
-//
-//    }else{
-//        [self configFractal];
-//        [self.renderer fractal];
-//    }
-    
+}
+
+- (IBAction)sliderChanged:(NSSlider *)sender {
+    _crText.floatValue = _complexRSlider.floatValue;
+    _ciText.floatValue = _complexISlider.floatValue;
+
+    if(_realTime.check && !_typeSwitch.check){
+        _renderer.gradient = false;
+        [self configFractal];
+        [self.renderer fractal];
+    }
 }
 
 - (void)configFractal
@@ -142,7 +138,7 @@
     _mtkView = [[MTKView alloc] initWithFrame:CGRectMake((parentSize.width-minSize)/2, (parentSize.height-minSize)/2, minSize, minSize) device:MTLCreateSystemDefaultDevice()];
     
     _mtkView.colorPixelFormat = MTLPixelFormatBGRA8Unorm;
-    _mtkView.drawableSize = _mtkView.bounds.size;
+    //_mtkView.drawableSize = _mtkView.bounds.size;
     _mtkView.enableSetNeedsDisplay = YES;
     _mtkView.paused = YES;
     [_mtkBoardView addSubview:_mtkView];

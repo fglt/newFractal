@@ -688,10 +688,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fillProportionally" orientation="vertical" alignment="centerX" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ccx-Ve-to6">
-                                <rect key="frame" x="341" y="130" width="250" height="140"/>
+                                <rect key="frame" x="341" y="113" width="250" height="174"/>
                                 <subviews>
                                     <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I22-ku-Vrf" userLabel="complex">
-                                        <rect key="frame" x="0.0" y="118" width="250" height="22"/>
+                                        <rect key="frame" x="0.0" y="152" width="250" height="22"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2H-85-lNw">
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="22"/>
@@ -731,7 +731,7 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fillProportionally" orientation="horizontal" alignment="centerY" spacing="70" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="txz-WX-i4M">
-                                        <rect key="frame" x="0.0" y="76" width="250" height="22"/>
+                                        <rect key="frame" x="0.0" y="110" width="250" height="22"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dby-Ou-D0q">
                                                 <rect key="frame" x="0.0" y="0.0" width="100" height="22"/>
@@ -765,7 +765,7 @@
                                         </customSpacing>
                                     </stackView>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1cZ-WN-kox">
-                                        <rect key="frame" x="98.5" y="37" width="53" height="19"/>
+                                        <rect key="frame" x="98.5" y="71" width="53" height="19"/>
                                         <buttonCell key="cell" type="roundRect" title="Factal" bezelStyle="roundedRect" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="uuS-uh-m8O">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system" size="14"/>
@@ -773,6 +773,13 @@
                                         <connections>
                                             <action selector="fractalButtonAction:" target="XfG-lQ-9wD" id="GFz-a5-foG"/>
                                         </connections>
+                                    </button>
+                                    <button translatesAutoresizingMaskIntoConstraints="NO" id="Fh3-LT-R8g" customClass="FGSwitch">
+                                        <rect key="frame" x="87.5" y="36" width="75" height="18"/>
+                                        <buttonCell key="cell" type="check" title="realTime" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Dzz-mE-gMU">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
                                     </button>
                                     <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="AJV-vO-2We" customClass="ProgressIndictor">
                                         <rect key="frame" x="0.0" y="-1" width="250" height="20"/>
@@ -786,8 +793,10 @@
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
+                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
@@ -801,20 +810,58 @@
                                     <constraint firstAttribute="width" constant="301" id="xz8-Pw-Kos"/>
                                 </constraints>
                             </customView>
+                            <stackView distribution="fillEqually" orientation="vertical" alignment="leading" spacing="30" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Lx-y3-v3j" userLabel="sliders">
+                                <rect key="frame" x="341" y="290" width="250" height="60"/>
+                                <subviews>
+                                    <slider verticalHuggingPriority="750" tag="20" translatesAutoresizingMaskIntoConstraints="NO" id="rd2-GA-4Jh">
+                                        <rect key="frame" x="-2" y="43" width="254" height="19"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="bWG-fF-Hsk"/>
+                                        </constraints>
+                                        <sliderCell key="cell" state="on" alignment="left" minValue="-1" maxValue="1" tickMarkPosition="above" sliderType="linear" id="HAf-ao-dEY"/>
+                                        <connections>
+                                            <action selector="sliderChanged:" target="XfG-lQ-9wD" id="DKN-on-q91"/>
+                                        </connections>
+                                    </slider>
+                                    <slider verticalHuggingPriority="750" tag="21" translatesAutoresizingMaskIntoConstraints="NO" id="NjY-Kl-m48">
+                                        <rect key="frame" x="-2" y="-2" width="254" height="19"/>
+                                        <sliderCell key="cell" state="on" alignment="left" minValue="-1" maxValue="1" tickMarkPosition="above" sliderType="linear" id="CTT-d7-sd8"/>
+                                        <connections>
+                                            <action selector="sliderChanged:" target="XfG-lQ-9wD" id="Bym-FU-Cqd"/>
+                                        </connections>
+                                    </slider>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="NjY-Kl-m48" firstAttribute="width" secondItem="rd2-GA-4Jh" secondAttribute="width" id="vgP-H4-qHR"/>
+                                </constraints>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="ccx-Ve-to6" firstAttribute="leading" secondItem="WH1-5l-VF0" secondAttribute="trailing" constant="20" id="NpN-9W-yvP"/>
                             <constraint firstItem="ccx-Ve-to6" firstAttribute="centerY" secondItem="zF7-EL-uVA" secondAttribute="centerY" id="Nqy-i1-lb8"/>
+                            <constraint firstItem="0Lx-y3-v3j" firstAttribute="leading" secondItem="ccx-Ve-to6" secondAttribute="leading" id="Tt9-uB-UYu"/>
                             <constraint firstItem="WH1-5l-VF0" firstAttribute="leading" secondItem="zF7-EL-uVA" secondAttribute="leading" constant="20" id="VHs-k7-osb"/>
                             <constraint firstItem="WH1-5l-VF0" firstAttribute="centerY" secondItem="zF7-EL-uVA" secondAttribute="centerY" id="kYR-ox-9ux"/>
+                            <constraint firstItem="0Lx-y3-v3j" firstAttribute="top" secondItem="WH1-5l-VF0" secondAttribute="top" id="ouy-Uc-vS6"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="ciText" destination="hQs-K7-cRG" id="8o0-8v-U0N"/>
+                        <outlet property="complexISlider" destination="NjY-Kl-m48" id="xpF-BI-Uq8"/>
+                        <outlet property="complexRSlider" destination="rd2-GA-4Jh" id="zpl-25-pv9"/>
                         <outlet property="crText" destination="n2H-85-lNw" id="z2S-pC-8Wd"/>
                         <outlet property="mtkBoardView" destination="WH1-5l-VF0" id="t6T-5N-Ege"/>
                         <outlet property="mtkView" destination="WH1-5l-VF0" id="icB-yf-EXO"/>
                         <outlet property="progressIndicator" destination="AJV-vO-2We" id="PfS-Qs-Vzv"/>
+                        <outlet property="realTime" destination="Fh3-LT-R8g" id="kFc-A9-hFB"/>
                         <outlet property="timesText" destination="Dby-Ou-D0q" id="GPa-TJ-B0U"/>
                         <outlet property="typeSwitch" destination="eGA-mP-Bjc" id="aRy-Gg-lw0"/>
                     </connections>

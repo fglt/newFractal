@@ -12,6 +12,7 @@
 using namespace metal;
 
 constant float2 PositionFix = float2(0.5);
+constant float M_PI_2 = 6.2831853071796;
 typedef struct {
     uint maxTime;
     uint radius;
@@ -38,7 +39,7 @@ typedef struct {
 
 static float4 cubehelix(float lamda, CubeHelix helix)
 {
-    float theta = 2*3.1415926*(helix.start/3 + helix.rot* lamda);
+    float theta = M_PI_2*(helix.start/3 + helix.rot* lamda);
     float sint = sin(theta);
     float cost = cos(theta);
     float l = pow(lamda, helix.gamma);
@@ -136,11 +137,10 @@ kernel void fractal_color(texture2d<float, access::write> writeTexture [[texture
     float2 bounds(width, height);
     float2 position = float2(gridPosition)+PositionFix;
     
-    if(gridPosition.x < width && gridPosition.y < height){
-        float value= fractal(position/bounds,fra);
-        float4 color = cubehelixF(1-value, helix);
-        writeTexture.write(color, gridPosition);
-    }
+    float value= fractal(position/bounds,fra);
+    float4 color = cubehelixF(1-value, helix);
+    writeTexture.write(color, gridPosition);
+    
 }
 
 kernel void gradient_fractal_time(texture2d<float, access::sample> readTexture [[texture(0)]],
