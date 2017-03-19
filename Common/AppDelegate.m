@@ -14,6 +14,14 @@
 
 @implementation AppDelegate
 
+#if TARGET_OS_IPHONE
+#else
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
+{
+    return YES;
+}
+#endif
+
 
 //- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 //    // Override point for customization after application launch.
