@@ -28,27 +28,40 @@
 
 @property (weak, nonatomic) IBOutlet ProgressIndictor *progressIndicator;
 
-@property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic, strong) id<RendererDelegate> renderer;
+@property (nonatomic, strong) FGLTGradientRenderer *renderer;
+
 @property (nonatomic, strong) MTKView *mtkView;
 @end
 
-@implementation GPUViewController
+@implementation GPUViewController{
+    FractalHandler handler;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupMetal];
     _renderer = [[FGLTGradientRenderer alloc] initWithView:_mtkView];
+    __weak typeof(self) weakSelf = self;
+    handler =^(){
+        weakSelf.progressIndicator.doubleValue = [(FGLTGradientRenderer *)weakSelf.renderer progress];
+        
+    };
+    [_renderer setHandler:handler];
+
     //_renderer = [[FGLTRenderer alloc] initWithView:_mtkView];
 }
 
 - (IBAction)fractalButtonAction:(id)sender {
     
     [self configFractal];
-    if(!self.timer){
-        _progressIndicator.doubleValue = 0;
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(render) userInfo:nil repeats:YES];
-    }
+    self.renderer.gradient = _typeSwitch.check;
+    [self.renderer fractal];
+//    __weak typeof(self) weakSelf = self;
+//    
+//    [self.renderer setHandler:^(){
+//        weakSelf.progressIndicator.doubleValue = [(FGLTGradientRenderer *)weakSelf.renderer progress];
+//    
+//    }];
 //    if([_typeSwitch check]){
 //         [self configFractal];
 //        if(!self.timer){
@@ -79,13 +92,6 @@
 #endif
     FractalOptions fo = {[timestring intValue], 16, [crs floatValue], [cis floatValue]};
     [_renderer setFractalOptions:fo];
-}
-
-- (void)render
-{
-    if( ![self.renderer fractal]){
-        [_timer invalidate];
-    }
 }
 
 - (IMAGE_CLASS *)imageFromCGImageRef:(CGImageRef)image
@@ -139,6 +145,8 @@
     
     _mtkView.colorPixelFormat = MTLPixelFormatBGRA8Unorm;
     _mtkView.drawableSize = _mtkView.bounds.size;
+    _mtkView.enableSetNeedsDisplay = YES;
+    _mtkView.paused = YES;
     _renderer = [[FGLTRenderer alloc] initWithView:_mtkView];
     [_mtkBoardView addSubview:_mtkView];
     

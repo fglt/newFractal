@@ -24,9 +24,12 @@ struct ColorOptions{
 
 typedef struct ColorOptions ColorOptions;
 
+
+typedef void (^FractalHandler)() ;
 @protocol RendererDelegate <NSObject>
 
-- (BOOL)fractal;
+@property (weak) FractalHandler handler;
+- (void)fractal;
 
 - (void)setFractalOptions:(FractalOptions) options;
 - (void)setColorOptions:(ColorOptions) options;

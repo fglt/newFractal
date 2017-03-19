@@ -91,6 +91,8 @@ static float4 gradient_fractal(float4 info, Fractal fra)
 //    }
 //
 //    return out;
+    
+    if((uint)info[3]==fra.maxTime) return float4(info);
     float x = info[0];
     float y = info[1];
     uint m = info[2];
@@ -177,5 +179,14 @@ kernel void gradient_fractal_color(texture2d<float, access::sample> fractalTextu
     
 }
 
-
+kernel void clearTexture(
+                         texture2d<float, access::write> currentGradientTexture [[texture(0)]],
+                         texture2d<float, access::write> lastGradientTexture [[texture(1)]],
+                         uint2 gridPosition [[thread_position_in_grid]])
+{
+    float4 zero =float4(0);
+    //colorTexture.write(zero, gridPosition);
+    currentGradientTexture.write(zero, gridPosition);
+    lastGradientTexture.write(zero, gridPosition);
+}
 

@@ -16,7 +16,8 @@
 @property (nonatomic, strong) id<MTLCommandQueue> commandQueue;
 @property (nonatomic, strong) id<MTLLibrary> library;
 @property (nonatomic, strong) id<MTLRenderPipelineState> renderPipelineState;
-@property (nonatomic, strong) id<MTLComputePipelineState> fractalPipelineState;
+@property (nonatomic, strong) id<MTLComputePipelineState> gradientPipilineState;
+@property (nonatomic, strong) id<MTLComputePipelineState> fractalPipilineState;
 @property (nonatomic, strong) id<MTLBuffer> vertexBuffer;
 
 @property (nonatomic, strong) id<MTLTexture> colorTexture;
@@ -24,6 +25,7 @@
 @property (nonatomic, strong) id<MTLTexture> lastGradientTexture;
 
 @property (nonatomic, strong) id<MTLComputePipelineState> gradientStatePipelineState;
+@property (nonatomic, strong) id<MTLComputePipelineState> clearTexturePipelineState;
 
 @property (nonatomic, readonly) MTLSize gridSize;
 @property (nonatomic, strong) dispatch_semaphore_t fractalSemaphore;
@@ -32,7 +34,13 @@
 @implementation FGLTGradientRenderer
 {
     UInt16 _times;
-    NSDate *_nextTimestamp;;
+    NSTimer *_timer;
+    NSDictionary *_MTLFunctions;
+}
+
+- (void)dealloc
+{
+    [_timer invalidate];
 }
 
 - (instancetype)initWithView:(MTKView *)view
@@ -48,24 +56,41 @@
         _view.delegate = self;
         _device = _view.device;
         _library = [_device newDefaultLibrary];
-        _commandQueue = [_device newCommandQueue];
         
         CGFloat scale = self.view.layer.contentsScale;
         MTLSize proposedGridSize = MTLSizeMake(_view.drawableSize.width / scale, _view.drawableSize.height / scale, 1);
         
         _gridSize = proposedGridSize;
-        FractalOptions f = {100, 16, 0.45, -0.1428};
-        _fractalOptions = f;
+
         ColorOptions c = {0, 7, 5,1};
         _colorOptions =  c;
+        self.fractalSemaphore = dispatch_semaphore_create(1);
+        
+        [self buildFunction];
         [self buildRenderResources];
         [self buildRenderPipeline];
         [self buildComputeResources];
         [self buildComputePipeline];
-        self.fractalSemaphore = dispatch_semaphore_create(1);
     }
     
     return self;
+}
+
+- (void)buildFunction
+{
+    id<MTLFunction> vertexFunction = [self.library newFunctionWithName:@"vertex_function"];
+    id<MTLFunction> fragmentFunction = [self.library newFunctionWithName:@"fragment_function"];
+    id<MTLFunction> gradientTimeFunction = [_library newFunctionWithName:@"gradient_fractal_time"];
+    id<MTLFunction> gradientColorFunction = [_library newFunctionWithName:@"gradient_fractal_color"];
+    id<MTLFunction> clearTextureFunction = [_library newFunctionWithName:@"clearTexture"];
+    id<MTLFunction> colorFunction = [_library newFunctionWithName:@"fractal_color"];
+    _MTLFunctions = @{@"vertex_function":vertexFunction,
+                      @"fragment_function":fragmentFunction,
+                      @"gradient_fractal_time":gradientTimeFunction,
+                      @"gradient_fractal_color":gradientColorFunction,
+                      @"clearTexture":clearTextureFunction,
+                      @"fractal_color":colorFunction
+                      };
 }
 
 - (void)buildRenderResources
@@ -137,6 +162,7 @@
 
 - (void)buildComputeResources
 {
+    
     MTLTextureDescriptor *descriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
                                                                                           width:_gridSize.width
                                                                                          height:_gridSize.height
@@ -146,7 +172,7 @@
     
     _colorTexture = [_device newTextureWithDescriptor:descriptor];
     _colorTexture.label = @"escapeTime State";
-    
+
     descriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA16Float
                                                                                           width:_gridSize.width
                                                                                          height:_gridSize.height
@@ -185,14 +211,40 @@
     descriptor = [MTLComputePipelineDescriptor new];
     descriptor.computeFunction = [_library newFunctionWithName:@"gradient_fractal_color"];
     descriptor.label = @"gradient fractal color";
-    _fractalPipelineState = [_device newComputePipelineStateWithDescriptor:descriptor
+    _gradientPipilineState = [_device newComputePipelineStateWithDescriptor:descriptor
                                                                    options:MTLPipelineOptionNone
                                                                 reflection:nil
                                                                      error:&error];
     
-    if (!_fractalPipelineState)
+    if (!_gradientPipilineState)
     {
         NSLog(@"Error when compiling simulation pipeline state: %@", error);
+    }
+    
+    descriptor = [MTLComputePipelineDescriptor new];
+    descriptor.computeFunction = [_library newFunctionWithName:@"clearTexture"];
+    descriptor.label = @"clear texture";
+    _clearTexturePipelineState = [_device newComputePipelineStateWithDescriptor:descriptor
+                                                                   options:MTLPipelineOptionNone
+                                                                reflection:nil
+                                                                     error:&error];
+    
+    if (!_clearTexturePipelineState)
+    {
+        NSLog(@"Error when clear pipeline state: %@", error);
+    }
+    
+    descriptor = [MTLComputePipelineDescriptor new];
+    descriptor.computeFunction = [_library newFunctionWithName:@"fractal_color"];
+    descriptor.label = @"fractal color";
+    _fractalPipilineState = [_device newComputePipelineStateWithDescriptor:descriptor
+                                                                    options:MTLPipelineOptionNone
+                                                                 reflection:nil
+                                                                      error:&error];
+    
+    if (!_fractalPipilineState)
+    {
+        NSLog(@"Error when compiling pipeline state: %@", error);
     }
 }
 
@@ -226,7 +278,14 @@
     MTLSize threadgroupCount = MTLSizeMake(ceil((float)self.gridSize.width / threadsPerThreadgroup.width),
                                            ceil((float)self.gridSize.height / threadsPerThreadgroup.height),
                                            1);
+    if(!_gradient){
+        [commandEncoder setComputePipelineState:self.fractalPipilineState];
+        [commandEncoder setTexture:_colorTexture atIndex:0];
+        [commandEncoder setBytes:&_fractalOptions length:sizeof(_fractalOptions) atIndex:0];
+        [commandEncoder setBytes:&_colorOptions length:sizeof(_colorOptions) atIndex:1];
+        [commandEncoder dispatchThreadgroups:threadgroupCount threadsPerThreadgroup:threadsPerThreadgroup];
     
+    }else{
         [commandEncoder setComputePipelineState:_gradientStatePipelineState];
         [commandEncoder setTexture:_currentGradientTexture atIndex:0];
         [commandEncoder setTexture:_lastGradientTexture atIndex:1];
@@ -236,14 +295,14 @@
         _lastGradientTexture = _currentGradientTexture;
         _currentGradientTexture = tt;
         
-    //}
-    // Configure the compute command encoder and dispatch the actual work
-    [commandEncoder setComputePipelineState:self.fractalPipelineState];
-    [commandEncoder setTexture:_currentGradientTexture atIndex:0];
-    [commandEncoder setTexture:_colorTexture atIndex:1];
-    [commandEncoder setBytes:&_fractalOptions length:sizeof(_fractalOptions) atIndex:0];
-    [commandEncoder setBytes:&_colorOptions length:sizeof(_colorOptions) atIndex:1];
-    [commandEncoder dispatchThreadgroups:threadgroupCount threadsPerThreadgroup:threadsPerThreadgroup];
+        // Configure the compute command encoder and dispatch the actual work
+        [commandEncoder setComputePipelineState:self.gradientPipilineState];
+        [commandEncoder setTexture:_currentGradientTexture atIndex:0];
+        [commandEncoder setTexture:_colorTexture atIndex:1];
+        [commandEncoder setBytes:&_fractalOptions length:sizeof(_fractalOptions) atIndex:0];
+        [commandEncoder setBytes:&_colorOptions length:sizeof(_colorOptions) atIndex:1];
+        [commandEncoder dispatchThreadgroups:threadgroupCount threadsPerThreadgroup:threadsPerThreadgroup];
+    }
     
     // If the user has interacted with the simulation, we now need to dispatch a smaller
     // amount of work to activate random cells near the points they have clicked/touched
@@ -287,55 +346,85 @@
 }
 #endif
 
-- (void) draw{
-    id<MTLCommandBuffer> commandBuffer = [self.commandQueue commandBuffer];
-    
-    [self encodeComputeWorkInBuffer:commandBuffer];
-    [self encodeRenderWorkInBuffer:commandBuffer];
-
-    [commandBuffer commit];
+- (void)fractal
+{
+    if(_gradient){
+        if(!_timer){
+         _timer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(draw) userInfo:nil repeats:YES];
+        }
+    }else{
+        [self draw];
+    }
 }
 
-- (BOOL)fractal
+- (void)draw
 {
-    if(_times == _fractalOptions.maxTime) return false;
-    //dispatch_semaphore_signal(self.fractalSemaphore);
-    return true;
+    if(_timer && _times>=_fractalOptions.maxTime){
+        [_timer invalidate];
+        _timer = nil;
+        _times= 0;
+        [self clearTexture];
+        return;
+    }
+    [_view setNeedsDisplay:YES];
 }
 
 - (void)setFractalOptions:(FractalOptions) options{
+    if(_timer) return ;
     _fractalOptions = options;
 }
+
 - (void)setColorOptions:(ColorOptions) options{
+    if(_timer) return ;
+
     _colorOptions = options;
 }
-- (void)clear
+
+- (void)clearTexture
 {
-    _times= 0;
+    id<MTLCommandBuffer> commandBuffer = [self.commandQueue commandBuffer];
+    id<MTLComputeCommandEncoder> commandEncoder = [commandBuffer computeCommandEncoder];
+    
+    MTLSize threadsPerThreadgroup = MTLSizeMake(16, 16, 1);
+    MTLSize threadgroupCount = MTLSizeMake(ceil((float)self.gridSize.width / threadsPerThreadgroup.width),
+                                           ceil((float)self.gridSize.height / threadsPerThreadgroup.height),
+                                           1);
+    [commandEncoder setComputePipelineState:_clearTexturePipelineState];
+    [commandEncoder setTexture:_currentGradientTexture atIndex:0];
+    [commandEncoder setTexture:_lastGradientTexture atIndex:1];
+    [commandEncoder dispatchThreadgroups:threadgroupCount threadsPerThreadgroup:threadsPerThreadgroup];
+    
+    [commandEncoder endEncoding];
+    [commandBuffer commit];
 }
 
+- (CGFloat)progress
+{
+    return (CGFloat)(_times)/_fractalOptions.maxTime;
+}
+
+#pragma mark -MTKViewDelegate
 - (void)drawInMTKView:(MTKView *)view
 {
+    if(_fractalOptions.maxTime<=0 ||_times>=_fractalOptions.maxTime) return;
+    
+    
     dispatch_semaphore_wait(self.fractalSemaphore, DISPATCH_TIME_FOREVER);
     
-    if(_nextTimestamp && [_nextTimestamp timeIntervalSinceNow]>0) {
-        dispatch_semaphore_signal(_fractalSemaphore);
-        return;
-    }
     id<MTLCommandBuffer> commandBuffer = [self.commandQueue commandBuffer];
     
     __block dispatch_semaphore_t blockSemaphore = self.fractalSemaphore;
 
     [commandBuffer addCompletedHandler:^(id<MTLCommandBuffer> buffer) {
         dispatch_semaphore_signal(blockSemaphore);
-        _nextTimestamp = [NSDate dateWithTimeIntervalSinceNow:0.2];
     }];
     
     [self encodeComputeWorkInBuffer:commandBuffer];
-    
+
     [self encodeRenderWorkInBuffer:commandBuffer];
-    
     [commandBuffer commit];
+    if(_gradient&&_handler)
+        _handler();
 }
 
 - (void)mtkView:(MTKView *)view drawableSizeWillChange:(CGSize)size

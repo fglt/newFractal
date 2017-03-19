@@ -47,6 +47,7 @@
 		171EBCB31E7CE10A003099A4 /* FGSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC491E757EBA003099A4 /* FGSwitch.m */; };
 		171EBCB41E7CE572003099A4 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 171EBCAA1E7CDA5D003099A4 /* Shaders.metal */; };
 		171EBCB71E7D3A65003099A4 /* FGLTGradientRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBCB61E7D3A65003099A4 /* FGLTGradientRenderer.m */; };
+		171EBCB91E7E3D93003099A4 /* ProgressIndictor.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC4D1E757EBA003099A4 /* ProgressIndictor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -530,6 +531,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				171EBCB91E7E3D93003099A4 /* ProgressIndictor.m in Sources */,
 				171EBCB41E7CE572003099A4 /* Shaders.metal in Sources */,
 				171EBCB31E7CE10A003099A4 /* FGSwitch.m in Sources */,
 				171EBCB21E7CDE33003099A4 /* FGTHSBSupport.m in Sources */,

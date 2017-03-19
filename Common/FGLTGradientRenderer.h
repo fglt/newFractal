@@ -11,12 +11,15 @@
 #import "GPURender.h"
 @class MTKView;
 
+
+
 @interface FGLTGradientRenderer : NSObject<RendererDelegate>
 {
     FractalOptions _fractalOptions;
     ColorOptions _colorOptions;
 }
-
+@property (weak) FractalHandler handler;
+@property BOOL gradient;
 - (instancetype)initWithView:(MTKView *)view;
-- (void)clear;
+- (CGFloat)progress;
 @end
