@@ -40,7 +40,6 @@
 		171EBC911E7BC17F003099A4 /* GPUViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC901E7BC17F003099A4 /* GPUViewController.m */; };
 		171EBC931E7BC17F003099A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 171EBC921E7BC17F003099A4 /* Assets.xcassets */; };
 		171EBC961E7BC17F003099A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 171EBC941E7BC17F003099A4 /* Main.storyboard */; };
-		171EBCAB1E7CDA5D003099A4 /* FGLTRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBCA91E7CDA5D003099A4 /* FGLTRenderer.m */; };
 		171EBCAF1E7CDCCB003099A4 /* Complex.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC441E757EBA003099A4 /* Complex.m */; };
 		171EBCB01E7CDE16003099A4 /* FGLTFractal.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC471E757EBA003099A4 /* FGLTFractal.m */; };
 		171EBCB21E7CDE33003099A4 /* FGTHSBSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 171EBC4B1E757EBA003099A4 /* FGTHSBSupport.m */; };
@@ -98,8 +97,6 @@
 		171EBC921E7BC17F003099A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		171EBC951E7BC17F003099A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		171EBC971E7BC17F003099A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		171EBCA81E7CDA5D003099A4 /* FGLTRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FGLTRenderer.h; sourceTree = "<group>"; };
-		171EBCA91E7CDA5D003099A4 /* FGLTRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FGLTRenderer.m; sourceTree = "<group>"; };
 		171EBCAA1E7CDA5D003099A4 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		171EBCB51E7D3A65003099A4 /* FGLTGradientRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FGLTGradientRenderer.h; sourceTree = "<group>"; };
 		171EBCB61E7D3A65003099A4 /* FGLTGradientRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FGLTGradientRenderer.m; sourceTree = "<group>"; };
@@ -172,8 +169,6 @@
 		171EBC0D1E757E39003099A4 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				171EBCA81E7CDA5D003099A4 /* FGLTRenderer.h */,
-				171EBCA91E7CDA5D003099A4 /* FGLTRenderer.m */,
 				171EBCAA1E7CDA5D003099A4 /* Shaders.metal */,
 				171EBC411E757EBA003099A4 /* AppDelegate.h */,
 				171EBC421E757EBA003099A4 /* AppDelegate.m */,
@@ -538,7 +533,6 @@
 				171EBCB01E7CDE16003099A4 /* FGLTFractal.m in Sources */,
 				171EBCAF1E7CDCCB003099A4 /* Complex.m in Sources */,
 				171EBC911E7BC17F003099A4 /* GPUViewController.m in Sources */,
-				171EBCAB1E7CDA5D003099A4 /* FGLTRenderer.m in Sources */,
 				171EBC8E1E7BC17F003099A4 /* main.m in Sources */,
 				171EBC8B1E7BC17F003099A4 /* AppDelegate.m in Sources */,
 				171EBCB71E7D3A65003099A4 /* FGLTGradientRenderer.m in Sources */,

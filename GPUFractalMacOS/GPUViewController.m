@@ -14,8 +14,6 @@
 #import "FGTHSBSupport.h"
 #import "FGSwitch.h"
 #import "ProgressIndictor.h"
-
-#import "FGLTRenderer.h"
 #import "FGLTGradientRenderer.h"
 
 @interface GPUViewController ()
@@ -147,7 +145,6 @@
     _mtkView.drawableSize = _mtkView.bounds.size;
     _mtkView.enableSetNeedsDisplay = YES;
     _mtkView.paused = YES;
-    _renderer = [[FGLTRenderer alloc] initWithView:_mtkView];
     [_mtkBoardView addSubview:_mtkView];
     
     //self.view.contentScaleFactor = [UIScreen mainScreen].scale;
