@@ -89,11 +89,8 @@
 
 - (void)setupMetal {
     // Create the default Metal device
-    
-    CGSize parentSize = _mtkBoardView.bounds.size;
-    CGFloat minSize = 301;
     // Create, configure, and add a Metal sublayer to the current layer
-    _mtkView = [[MTKView alloc] initWithFrame:CGRectMake((parentSize.width-minSize)/2, (parentSize.height-minSize)/2, minSize, minSize) device:MTLCreateSystemDefaultDevice()];
+    _mtkView = [[MTKView alloc] initWithFrame:_mtkBoardView.bounds device:MTLCreateSystemDefaultDevice()];
     
     _mtkView.colorPixelFormat = MTLPixelFormatBGRA8Unorm;
     //_mtkView.drawableSize = _mtkView.bounds.size;
