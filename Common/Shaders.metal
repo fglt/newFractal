@@ -118,7 +118,7 @@ vertex VertexOut vertex_function(device VertexIn *vertices [[buffer(0)]],
     out.texCoords = vertices[vid].texCoords;;
     return out;
 }
-constexpr sampler lsampler(coord::normalized, filter::linear);
+constexpr sampler lsampler(coord::normalized, filter::nearest);
 
 fragment float4 fragment_function(VertexOut in [[stage_in]],
                                  texture2d<float, access::sample> escapeTime [[texture(0)]])
