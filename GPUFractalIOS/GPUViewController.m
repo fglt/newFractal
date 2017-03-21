@@ -22,8 +22,8 @@
 @property (weak) IBOutlet UITextField *crText;
 @property (weak) IBOutlet UITextField *ciText;
 @property (weak) IBOutlet UITextField *timesText;
-@property (weak) IBOutlet UISlider *complexRSlider;
-@property (weak) IBOutlet UISlider *complexISlider;
+//@property (weak) IBOutlet UISlider *complexRSlider;
+//@property (weak) IBOutlet UISlider *complexISlider;
 
 @property (weak, nonatomic) IBOutlet ProgressIndictor *progressIndicator;
 
@@ -47,7 +47,22 @@
     };
     [_renderer setHandler:handler];
     
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(touchMtkView:)];
+    [_mtkView  addGestureRecognizer:panGesture];
+    
     //_renderer = [[FGLTRenderer alloc] initWithView:_mtkView];
+}
+
+- (void)touchMtkView:(UIPanGestureRecognizer *)gesture
+{
+    CGPoint loc = [gesture locationInView:_mtkView];
+    if( !CGRectContainsPoint(_mtkView.bounds, loc)) return;
+    CGFloat x = loc.x/_mtkView.bounds.size.width*2-1;
+    CGFloat y = -loc.y/_mtkView.bounds.size.width*2+1;
+    _crText.text = [NSString stringWithFormat:@"%.3f",x];
+    _ciText.text = [NSString stringWithFormat:@"%.3f",y];
+    [self configFractal];
+    [self.renderer startFractal:NO];
 }
 
 - (IBAction)fractalButtonAction:(id)sender {
@@ -56,14 +71,14 @@
     [self.renderer startFractal:YES];
 }
 
-- (IBAction)sliderChanged:(UISlider *)sender {
-    _crText.text = [NSString stringWithFormat:@"%.3f",_complexRSlider.value];
-    _ciText.text = [NSString stringWithFormat:@"%.3f",_complexISlider.value];
-
-    [self configFractal];
-    [self.renderer startFractal:NO];
-    
-}
+//- (IBAction)sliderChanged:(UISlider *)sender {
+//    _crText.text = [NSString stringWithFormat:@"%.3f",_complexRSlider.value];
+//    _ciText.text = [NSString stringWithFormat:@"%.3f",_complexISlider.value];
+//
+//    [self configFractal];
+//    [self.renderer startFractal:NO];
+//    
+//}
 
 - (void)configFractal
 {

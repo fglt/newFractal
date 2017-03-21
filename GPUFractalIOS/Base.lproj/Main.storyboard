@@ -110,31 +110,6 @@
                                     </progressView>
                                 </subviews>
                             </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="mLt-Nt-M36" userLabel="sliders">
-                                <rect key="frame" x="412" y="496" width="200" height="80"/>
-                                <subviews>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="par-ov-ZHU">
-                                        <rect key="frame" x="-2" y="0.0" width="204" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="93v-RS-MYz"/>
-                                        </constraints>
-                                        <connections>
-                                            <action selector="sliderChanged:" destination="2Ji-xt-uNS" eventType="touchDragInside" id="FIp-lp-1Vx"/>
-                                            <action selector="sliderChanged:" destination="2Ji-xt-uNS" eventType="touchDragOutside" id="WkL-zL-hZ7"/>
-                                        </connections>
-                                    </slider>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="G29-yT-pek">
-                                        <rect key="frame" x="-2" y="50" width="204" height="31"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="YoU-Vc-WvY"/>
-                                        </constraints>
-                                        <connections>
-                                            <action selector="sliderChanged:" destination="2Ji-xt-uNS" eventType="touchDragOutside" id="Pve-vT-0Qs"/>
-                                            <action selector="sliderChanged:" destination="2Ji-xt-uNS" eventType="touchDragInside" id="faI-3S-l6Y"/>
-                                        </connections>
-                                    </slider>
-                                </subviews>
-                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hPB-t9-Hja">
                                 <rect key="frame" x="362" y="40" width="301" height="301"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -150,15 +125,9 @@
                             <constraint firstItem="hPB-t9-Hja" firstAttribute="centerX" secondItem="38W-uz-2pi" secondAttribute="centerX" id="Coh-4i-yho"/>
                             <constraint firstItem="aIq-U1-Tmg" firstAttribute="top" secondItem="hPB-t9-Hja" secondAttribute="bottom" constant="20" id="GAB-1u-vTw"/>
                             <constraint firstItem="hPB-t9-Hja" firstAttribute="top" secondItem="Moj-lk-9Sp" secondAttribute="bottom" constant="20" id="MUh-uG-ALC"/>
-                            <constraint firstItem="mLt-Nt-M36" firstAttribute="top" secondItem="aIq-U1-Tmg" secondAttribute="bottom" constant="10" id="Mla-Pg-BOV"/>
                             <constraint firstItem="hPB-t9-Hja" firstAttribute="centerX" secondItem="aIq-U1-Tmg" secondAttribute="centerX" id="YbD-zd-hna"/>
                             <constraint firstItem="aIq-U1-Tmg" firstAttribute="top" secondItem="Moj-lk-9Sp" secondAttribute="bottom" constant="10" id="fjK-G2-Byb"/>
-                            <constraint firstItem="hPB-t9-Hja" firstAttribute="centerX" secondItem="mLt-Nt-M36" secondAttribute="centerX" id="fxb-Ms-2hs"/>
-                            <constraint firstItem="mLt-Nt-M36" firstAttribute="leading" secondItem="hPB-t9-Hja" secondAttribute="trailing" constant="10" id="hrU-3o-J85">
-                                <variation key="heightClass=compact" constant="250"/>
-                            </constraint>
                             <constraint firstItem="hPB-t9-Hja" firstAttribute="leading" secondItem="38W-uz-2pi" secondAttribute="leadingMargin" constant="20" id="htp-eG-RHa"/>
-                            <constraint firstItem="mLt-Nt-M36" firstAttribute="centerX" secondItem="38W-uz-2pi" secondAttribute="centerX" id="opF-tz-Thh"/>
                             <constraint firstItem="hPB-t9-Hja" firstAttribute="centerX" secondItem="38W-uz-2pi" secondAttribute="centerX" id="rv8-Ji-Pgs"/>
                             <constraint firstItem="aIq-U1-Tmg" firstAttribute="leading" secondItem="hPB-t9-Hja" secondAttribute="trailing" constant="10" id="tJ8-mV-o9o"/>
                         </constraints>
@@ -167,16 +136,12 @@
                                 <exclude reference="Coh-4i-yho"/>
                                 <exclude reference="MUh-uG-ALC"/>
                                 <exclude reference="YbD-zd-hna"/>
-                                <exclude reference="fxb-Ms-2hs"/>
                                 <exclude reference="htp-eG-RHa"/>
                                 <exclude reference="rv8-Ji-Pgs"/>
                                 <exclude reference="8yY-vl-qQ6"/>
                                 <exclude reference="GAB-1u-vTw"/>
                                 <exclude reference="fjK-G2-Byb"/>
                                 <exclude reference="tJ8-mV-o9o"/>
-                                <exclude reference="Mla-Pg-BOV"/>
-                                <exclude reference="hrU-3o-J85"/>
-                                <exclude reference="opF-tz-Thh"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -185,8 +150,6 @@
                                 <include reference="htp-eG-RHa"/>
                                 <include reference="fjK-G2-Byb"/>
                                 <include reference="tJ8-mV-o9o"/>
-                                <include reference="Mla-Pg-BOV"/>
-                                <include reference="hrU-3o-J85"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -194,9 +157,7 @@
                                 <include reference="Coh-4i-yho"/>
                                 <include reference="MUh-uG-ALC"/>
                                 <include reference="YbD-zd-hna"/>
-                                <include reference="fxb-Ms-2hs"/>
                                 <include reference="GAB-1u-vTw"/>
-                                <include reference="Mla-Pg-BOV"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=regular">
@@ -205,15 +166,11 @@
                                 <include reference="rv8-Ji-Pgs"/>
                                 <include reference="8yY-vl-qQ6"/>
                                 <include reference="GAB-1u-vTw"/>
-                                <include reference="Mla-Pg-BOV"/>
-                                <include reference="opF-tz-Thh"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="ciText" destination="lSZ-EV-0Mf" id="zGG-nK-H4B"/>
-                        <outlet property="complexISlider" destination="G29-yT-pek" id="taS-8k-eFQ"/>
-                        <outlet property="complexRSlider" destination="par-ov-ZHU" id="dAa-Cn-Iyk"/>
                         <outlet property="crText" destination="6dx-pp-fXn" id="OOY-eh-7LO"/>
                         <outlet property="mtkBoardView" destination="hPB-t9-Hja" id="DBh-sF-m31"/>
                         <outlet property="progressIndicator" destination="JyO-gX-apj" id="pyE-zu-9JY"/>
