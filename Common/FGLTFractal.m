@@ -59,7 +59,10 @@
             int m =0;
             Complex * z = [[Complex alloc] initWithReal:(CGFloat)x*3/_width-1.5 image:(CGFloat)y*3/_height-1.5];
             for(; m <_times; m++){
-                if([z modelSquare]>=_radius*_radius) break;
+                if([z modelSquare]>_radius*_radius){
+                    float hue = (m+1-log2(log10([z modelSquare])/2))/_times*4 * M_PI + 3;
+                    return hue/_times;
+                }
                 z =  [[z square] addWith:_cComplex];
             }
             
@@ -72,7 +75,7 @@
 //                a = a*a-b*b+_cComplex.real;
 //                b = 2*a*b+_cComplex.image; //a已经改变了，应使用中间变量 暂时保存a的值；
 //            }
-            return 1-(CGFloat)m/_times;
+            return 0;
         }];
     } completion:^{
         if(completion)
@@ -202,7 +205,7 @@
     for(int i=startY ; i<endY; i++){
         for(int j= 0; j<_width; j++){
             CGFloat value = handler(j, i);
-            cubehelixF(value, bgr);
+            color(value, bgr, _times);
             memcpy(ptr, bgr, 3);
             memcpy(ptr2, bgr, 3);
             ptr += 4;

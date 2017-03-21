@@ -105,9 +105,9 @@ void RGBToHSV(const CGFloat * bgr, CGFloat*hsv, BOOL preserveHS)
 }
 
 
-void color(CGFloat value, UInt8 *bgr, int max)
+void color(CGFloat hue, UInt8 *bgr, int max)
 {
-    CGFloat hsv[3] = {0,1,1};
+    CGFloat hsv[3] = {hue,1,1};
     
     //hsv[0] = (log2(value+delta)-log2(delta))/(log2(_times+delta)-log2(delta)) ;
     //hsv[0] = log2(value/delta+1)/(log2(_times/delta+1)) ;
@@ -120,17 +120,27 @@ void color(CGFloat value, UInt8 *bgr, int max)
     //    if(value>_times*0.6)
     //        hsv[0]+= step;
     
-    hsv[0] = value/max*0.7;
-    CGFloat step = exp(value-max)*2;
-    if(value>max*0.1)
-        hsv[0]+= step;
-        hsv[0] = hsv[0]<=1? hsv[0]:0;
-        CGFloat bgrf[3] ={0,0,0};
-        HSVtoRGB(hsv, bgrf);
-        bgr[0] = bgrf[0]*255;
-        bgr[1] = bgrf[1]*255;
-        bgr[2] = bgrf[2]*255;
-        
+//    hsv[0] = value/max*0.7;
+//    CGFloat step = exp(value-max)*2;
+//    if(value>max*0.1)
+//        hsv[0]+= step;
+//        hsv[0] = hsv[0]<=1? hsv[0]:0;
+//        CGFloat bgrf[3] ={0,0,0};
+//        HSVtoRGB(hsv, bgrf);
+//        bgr[0] = bgrf[0]*255;
+//        bgr[1] = bgrf[1]*255;
+//        bgr[2] = bgrf[2]*255;
+            CGFloat bgrf[3] ={0,0,0};
+            HSVtoRGB(hsv, bgrf);
+    if(hue==1.0){
+        bgr[0] = 255;
+        bgr[1] = 255;
+        bgr[2] = 255;
+        return;
+    }
+            bgr[0] = (cos(hue*max)+1)/2*255;
+            bgr[1] = (-cos(hue*max+M_PI/3)+1)/2*255;
+            bgr[2] =  (-cos(hue*max-M_PI/3)+1)/2*255;
 }
 
 void cubehelix(CGFloat lamda, CGFloat start, CGFloat rot, CGFloat hue, CGFloat gamma, UInt8 *bgr)

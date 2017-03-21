@@ -62,7 +62,7 @@
         
         _gridSize = proposedGridSize;
 
-        ColorOptions c = {0, 7, 5,1};
+        ColorOptions c = {0, 2, 2,1};
         _colorOptions =  c;
         self.fractalSemaphore = dispatch_semaphore_create(1);
         
@@ -290,7 +290,6 @@
         _lastGradientTexture = _currentGradientTexture;
         _currentGradientTexture = tt;
         
-        // Configure the compute command encoder and dispatch the actual work
         [commandEncoder setComputePipelineState:self.gradientPipilineState];
         [commandEncoder setTexture:_currentGradientTexture atIndex:0];
         [commandEncoder setTexture:_colorTexture atIndex:1];
@@ -298,9 +297,6 @@
         [commandEncoder setBytes:&_colorOptions length:sizeof(_colorOptions) atIndex:1];
         [commandEncoder dispatchThreadgroups:threadgroupCount threadsPerThreadgroup:threadsPerThreadgroup];
     }
-    
-    // If the user has interacted with the simulation, we now need to dispatch a smaller
-    // amount of work to activate random cells near the points they have clicked/touched
     
     [commandEncoder endEncoding];
     
